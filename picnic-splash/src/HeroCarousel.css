@@ -131,7 +131,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1;
-  padding: 120px 24px 120px;
+  padding: 160px 24px 80px;
 }
 
 .hero-carousel__slide {
@@ -304,11 +304,12 @@
     max-width: 360px;
   }
 
-  /* Stable slide height + extra space between text and CTA so image/header don’t jump */
+  /* Shorter slide = less space above CTA on mobile */
   .hero-carousel__slide {
-    min-height: 380px;
+    min-height: 320px;
   }
 
+  /* Stable slide height + extra space between text and CTA so image/header don’t jump */
   .hero-carousel__slide .hero-carousel__cta {
     margin-top: auto;
   }
@@ -335,5 +336,15 @@
 
   .hero-carousel__arrow--next {
     right: 24px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 900px) {
+  .hero-carousel__content {
+    padding: 140px 24px 100px;
+  }
+
+  .hero-carousel__slide {
+    min-height: 260px;
   }
 }
