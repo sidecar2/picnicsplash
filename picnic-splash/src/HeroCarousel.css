@@ -1,0 +1,299 @@
+/* Hero Carousel – Figma HeaderCarousel (681-2776, 681-2744) */
+.hero-carousel {
+  --hero-accent: #f74c25;
+  --hero-cream: #faf7f0;
+  --hero-white: #fffffc;
+  --hero-dark: #0d0d0d;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1440 / 798;
+  min-height: 380px;
+  max-height: 90vh;
+  overflow: hidden;
+  background: var(--hero-dark);
+}
+
+.hero-carousel__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-carousel__bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 0.6s ease-in;
+}
+
+.hero-carousel__bg-image--visible {
+  opacity: 1;
+}
+
+.hero-carousel__bg-image--hidden {
+  opacity: 0;
+}
+
+.hero-carousel__bg-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-carousel__top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.hero-carousel__banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  background: var(--hero-dark);
+}
+
+.hero-carousel__banner-text {
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.1;
+  color: var(--hero-cream);
+}
+
+.hero-carousel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  gap: 32px;
+}
+
+.hero-carousel__logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.hero-carousel__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-carousel__btn {
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 11px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.hero-carousel__btn--inverse {
+  background: #f7f6f2;
+  color: var(--hero-accent);
+}
+
+.hero-carousel__btn--primary {
+  background: var(--hero-accent);
+  color: #f7f6f2;
+  border: 1px solid var(--hero-accent);
+}
+
+.hero-carousel__btn:hover {
+  opacity: 0.9;
+}
+
+.hero-carousel__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  padding: 120px 24px 80px;
+}
+
+.hero-carousel__slide {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 848px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in, visibility 0.5s ease-in;
+}
+
+.hero-carousel__slide--active {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+}
+
+.hero-carousel__mark {
+  display: block;
+  width: 37px;
+  height: auto;
+  object-fit: contain;
+}
+
+.hero-carousel__tagline {
+  font-family: 'P22 Mackinac Pro', serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--hero-cream);
+  margin: 0;
+}
+
+.hero-carousel__headline {
+  font-family: 'P22 Mackinac Pro', serif;
+  font-weight: 500;
+  font-size: clamp(36px, 5.5vw, 82px);
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+  color: var(--hero-white);
+  margin: 0;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+  white-space: pre-line;
+}
+
+.hero-carousel__subtitle {
+  font-family: 'P22 Mackinac Pro', serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+  color: var(--hero-white);
+  margin: 0;
+  opacity: 0.95;
+  white-space: pre-line;
+}
+
+.hero-carousel__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px 16px 16px;
+  min-width: 280px;
+  max-width: 350px;
+  height: 56px;
+  background: var(--hero-white);
+  color: var(--hero-dark);
+  border: none;
+  border-radius: 1000px;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.125;
+  letter-spacing: -0.002em;
+  cursor: pointer;
+  box-shadow:
+    0 0 8px rgba(0, 0, 0, 0.03),
+    0 4px 30px rgba(0, 0, 0, 0.03),
+    0 40px 70px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hero-carousel__cta:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 12px rgba(0, 0, 0, 0.05),
+    0 6px 36px rgba(0, 0, 0, 0.05);
+}
+
+.hero-carousel__cta svg {
+  flex-shrink: 0;
+  color: var(--hero-accent);
+}
+
+.hero-carousel__dots {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.hero-carousel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  padding: 0;
+  border: none;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.hero-carousel__dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.hero-carousel__dot--active {
+  background: var(--hero-white);
+  transform: scale(1.2);
+}
+
+.hero-carousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--hero-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.hero-carousel__arrow:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.hero-carousel__arrow--prev {
+  left: 16px;
+}
+
+.hero-carousel__arrow--next {
+  right: 16px;
+}
+
+@media (min-width: 768px) {
+  .hero-carousel__arrow {
+    width: 48px;
+    height: 48px;
+  }
+
+  .hero-carousel__arrow--prev {
+    left: 24px;
+  }
+
+  .hero-carousel__arrow--next {
+    right: 24px;
+  }
+}

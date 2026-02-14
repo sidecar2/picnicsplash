@@ -1,0 +1,130 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #141414;
+  margin: 0 0 24px 0;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding: 16px;
+  background: #f8f8f8;
+  border-radius: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nav-link {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #141414;
+  text-decoration: none;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.nav-link:hover {
+  background: #f0f0f0;
+  border-color: #c0c0c0;
+}
+
+.section {
+  width: 100%;
+  padding: 32px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #141414;
+  margin: 0 0 20px 0;
+}
+
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+
+.usage {
+  width: 100%;
+  max-width: 600px;
+  margin: 24px auto 0;
+  padding: 24px;
+  background: #f8f8f8;
+  border-radius: 12px;
+}
+
+.usage h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #141414;
+  margin: 0 0 12px 0;
+}
+
+.usage pre {
+  margin: 0;
+  padding: 16px;
+  background: #1a1a1a;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.usage code {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #e0e0e0;
+}
+
+.props-caption {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #6c6c6c;
+  line-height: 1.5;
+}
+
+.props-caption code {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 12px;
+  background: #e8e8e8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #141414;
+}
+
+/* Remove focus styles from filter chips */
+[data-component="filter-chip"]:focus,
+[data-component="filter-chip"]:focus-visible,
+[data-component="filter-chip"]:active,
+[data-component="filter-chip"]:-moz-focusring {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+[data-component="filter-chip"]:focus:not([data-active="true"]),
+[data-component="filter-chip"]:focus-visible:not([data-active="true"]) {
+  border-color: #e0e0e0 !important;
+}

@@ -1,0 +1,32 @@
+/* Splash store ticker – full-width auto-scroll, loop */
+.splash-store-carousel {
+  width: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.splash-store-carousel__viewport {
+  overflow: hidden;
+  width: 100%;
+  padding: 16px 0;
+}
+
+.splash-store-carousel__track {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  width: max-content;
+  animation: splash-store-ticker-scroll 60s linear infinite;
+}
+
+.splash-store-carousel__track .splash-store-card:nth-child(even) {
+  margin-top: 80px;
+}
+
+@keyframes splash-store-ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

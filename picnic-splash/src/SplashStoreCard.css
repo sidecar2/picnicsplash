@@ -1,0 +1,54 @@
+/* Splash store card – Figma 691-1892 */
+.splash-store-card {
+  width: 234px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 10px 22px;
+  background: #fffffc;
+  border-radius: 13px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  font-family: 'P22 Mackinac Pro', serif;
+}
+
+.splash-store-card__photo {
+  width: 100%;
+  height: 100px;
+  border-radius: 5.714px;
+  overflow: hidden;
+  position: relative;
+  background: #f0f0f0;
+}
+
+.splash-store-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.splash-store-card__name {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.19;
+  letter-spacing: -0.014em;
+  color: #1f1812;
+  text-align: center;
+  margin: 0;
+}
+
+.splash-store-card__category {
+  font-family: Inter, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.19;
+  letter-spacing: -0.014em;
+  color: #8e8e8e;
+  text-align: center;
+  margin: 0;
+  max-width: 190px;
+  white-space: normal;
+  word-wrap: break-word;
+}
