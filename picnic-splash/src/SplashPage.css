@@ -113,6 +113,12 @@
   100% { transform: translateX(-50%); }
 }
 
+@media (max-width: 767px) {
+  .splash-hero-ticker-track {
+    animation: splash-hero-ticker-scroll 25s linear infinite;
+  }
+}
+
 .splash-hero-bullets {
   display: flex;
   flex-direction: column;

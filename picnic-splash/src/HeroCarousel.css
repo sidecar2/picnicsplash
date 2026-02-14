@@ -13,6 +13,14 @@
   background: var(--hero-dark);
 }
 
+@media (max-width: 767px) {
+  .hero-carousel {
+    aspect-ratio: auto;
+    min-height: 85vh;
+    max-height: none;
+  }
+}
+
 .hero-carousel__bg {
   position: absolute;
   inset: 0;
@@ -119,10 +127,11 @@
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 1;
-  padding: 120px 24px 80px;
+  padding: 120px 24px 120px;
 }
 
 .hero-carousel__slide {
@@ -171,6 +180,7 @@
   margin: 0;
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
   white-space: pre-line;
+  max-width: min(720px, 100%);
 }
 
 .hero-carousel__subtitle {
@@ -283,7 +293,37 @@
   right: 16px;
 }
 
+@media (max-width: 767px) {
+  .hero-carousel__arrow {
+    display: none;
+  }
+
+  .hero-carousel__tagline,
+  .hero-carousel__headline,
+  .hero-carousel__subtitle {
+    max-width: 360px;
+  }
+
+  /* Stable slide height + extra space between text and CTA so image/header don’t jump */
+  .hero-carousel__slide {
+    min-height: 380px;
+  }
+
+  .hero-carousel__slide .hero-carousel__cta {
+    margin-top: auto;
+  }
+}
+
 @media (min-width: 768px) {
+  /* Fixed top (mark + content) and CTA at bottom so layout doesn’t jump between slides */
+  .hero-carousel__slide {
+    min-height: 380px;
+  }
+
+  .hero-carousel__slide .hero-carousel__cta {
+    margin-top: auto;
+  }
+
   .hero-carousel__arrow {
     width: 48px;
     height: 48px;

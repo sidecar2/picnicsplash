@@ -17,15 +17,15 @@ const HERO_CAROUSEL_SLIDES: HeroCarouselSlide[] = [
     backgroundImage: assetUrl('/images/hero/hero-1.png'),
     tagline: 'Team ordering made simple',
     headline: 'Better team lunches start here',
-    subtitle: 'A digital food court with no fees, or tips.\n50+ restaurants.',
+    subtitle: 'A digital food court with no fees, or tips. 50+ restaurants.',
     ctaText: 'Enter your delivery address',
   },
   {
     id: 'no-fee-deliveries',
     backgroundImage: assetUrl('/images/hero/hero-2.png'),
     tagline: 'Big smiles, Zero fees',
-    headline: 'No fee delivery,\nendless selection',
-    subtitle: 'Feed teams from 5 to 500\nwith no delivery or service fees or tips.',
+    headline: 'No fee delivery, endless selection',
+    subtitle: 'Feed teams from 5 to 500 with no delivery or service fees or tips.',
     ctaText: 'Enter your delivery address',
   },
   {
@@ -33,15 +33,15 @@ const HERO_CAROUSEL_SLIDES: HeroCarouselSlide[] = [
     backgroundImage: assetUrl('/images/hero/hero-3.png'),
     tagline: 'One order, no compromises.',
     headline: 'Everyone gets their favorite.',
-    subtitle: 'With a single link, any team member can choose any restaurant\nor meal they desire',
+    subtitle: 'With a single link, any team member can choose any restaurant or meal they desire',
     ctaText: 'Enter your delivery address',
   },
   {
     id: 'try-today',
     backgroundImage: assetUrl('/images/hero/hero-4.png'),
     tagline: 'Experience the difference, no strings attached',
-    headline: 'Try it today\nin DTLA',
-    subtitle: 'Try Picnic for yourself with no contracts,\ncommitments or setup',
+    headline: 'Try it today in Los Angeles',
+    subtitle: 'Try Picnic for yourself with no contracts, commitments or setup',
     ctaText: 'Enter your delivery address',
   },
 ]
@@ -67,10 +67,8 @@ const HERO_BULLETS = [
 ] as const
 
 const TICKER_ITEMS = [
-  'Try an order for your team today in Downtown Los Angeles',
-  'No setup or shelves required',
-  'Delivery available up to 3 hours prior to your event',
-  'No fees to your building',
+  '50+ Restaurants delivered to Downtown LA',
+  "Try Picnic today with 'no setup or contract'",
 ] as const
 
 const TICKER_SEPARATOR = '/images/general/Ticker-Dot.svg'
@@ -91,8 +89,6 @@ const WHEN_TO_PICNIC = [
   'Holiday parties',
   'Happy hour',
   'Onboarding',
-  'Birthdays',
-  'Events',
 ] as const
 
 const SPLASH_STORES: SplashStoreCarouselItem[] = [
