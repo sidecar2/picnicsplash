@@ -3,7 +3,7 @@ import { SplashStoreCarousel } from './SplashStoreCarousel'
 import type { SplashStoreCarouselItem } from './SplashStoreCarousel'
 import { HeroCarousel } from './HeroCarousel'
 import type { HeroCarouselSlide } from './HeroCarousel'
-// @ts-expect-error - BounceCards is .jsx, no type declarations
+// @ts-ignore - BounceCards is .jsx
 import BounceCards from './components/BounceCards'
 import './SplashPage.css'
 
