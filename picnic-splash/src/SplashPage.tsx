@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { SplashStoreCarousel } from './SplashStoreCarousel'
 import type { SplashStoreCarouselItem } from './SplashStoreCarousel'
 import { HeroCarousel } from './HeroCarousel'
 import type { HeroCarouselSlide } from './HeroCarousel'
+// @ts-expect-error - BounceCards is .jsx, no type declarations
+import BounceCards from './components/BounceCards'
 import './SplashPage.css'
 
 /** New query string on every full page load so hard refresh (Cmd+Shift+R) fetches latest images. */
@@ -10,6 +12,18 @@ const assetBust = Date.now().toString(36)
 function assetUrl(path: string): string {
   return `${path}${path.includes('?') ? '&' : '?'}t=${assetBust}`
 }
+
+/** Images for the Bouncing cards section – add files under public/images/BouncingCards/ */
+const BOUNCE_CARD_IMAGES = [
+  assetUrl('/images/BouncingCards/1.png'),
+  assetUrl('/images/BouncingCards/2.png'),
+  assetUrl('/images/BouncingCards/3.png'),
+  assetUrl('/images/BouncingCards/4.png'),
+  assetUrl('/images/BouncingCards/5.png'),
+  assetUrl('/images/BouncingCards/6.png'),
+  assetUrl('/images/BouncingCards/7.png'),
+  assetUrl('/images/BouncingCards/8.png'),
+]
 
 const HERO_CAROUSEL_SLIDES: HeroCarouselSlide[] = [
   {
@@ -89,6 +103,8 @@ const WHEN_TO_PICNIC = [
   'Holiday parties',
   'Happy hour',
   'Onboarding',
+  'Birthdays',
+  'Events',
 ] as const
 
 const SPLASH_STORES: SplashStoreCarouselItem[] = [
@@ -171,6 +187,69 @@ function MinusIcon() {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
       <path d="M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  )
+}
+
+function BounceCardsSection({ images }: { images: string[] }) {
+  const sectionRef = useRef<HTMLElement>(null)
+  const [inView, setInView] = useState(false)
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true)
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  return (
+    <section
+      ref={sectionRef}
+      className="splash-bounce-cards"
+      aria-labelledby="splash-bounce-cards-title"
+    >
+      <div className="splash-bounce-cards-content">
+        <img
+          src={assetUrl('/images/general/BoostTeam.svg')}
+          alt=""
+          className="splash-bounce-cards-icon"
+          aria-hidden
+        />
+        <h2 id="splash-bounce-cards-title" className="splash-bounce-cards-title">
+          Finally, everyone gets their favorite.
+        </h2>
+        <p className="splash-bounce-cards-subtitle">
+          One delivery. Zero compromises
+        </p>
+      </div>
+      <div className="splash-bounce-cards-inner">
+        {inView && (
+          <div className="splash-bounce-cards-stack">
+          <BounceCards
+            images={images}
+            containerWidth={620}
+            containerHeight={400}
+            enableHover={true}
+            transformStyles={[
+              'rotate(10deg) translate(-170px)',
+              'rotate(5deg) translate(-85px)',
+              'rotate(-3deg)',
+              'rotate(-10deg) translate(85px)',
+              'rotate(2deg) translate(170px)',
+              'rotate(-6deg) translate(255px)',
+              'rotate(4deg) translate(340px)',
+              'rotate(-2deg) translate(425px)',
+            ]}
+          />
+          </div>
+        )}
+      </div>
+    </section>
   )
 }
 
@@ -303,6 +382,75 @@ export function SplashPage() {
           </div>
         </div>
       </section>
+
+      {/* Bouncing cards – animate when section enters viewport */}
+      <BounceCardsSection images={BOUNCE_CARD_IMAGES} />
+
+      {/* Footer – Figma 731-7013 */}
+      <footer className="splash-footer" aria-label="Footer">
+        <div className="splash-footer-content">
+          <div className="splash-footer-top">
+            <div className="splash-footer-brand">
+              <img
+                src={assetUrl('/images/general/logo.svg')}
+                alt="Picnic"
+                className="splash-footer-logo"
+              />
+              <div className="splash-footer-social">
+                <p className="splash-footer-social-label">Follow us on social media</p>
+                <div className="splash-footer-social-links">
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="splash-footer-social-link" aria-label="Instagram">Instagram</a>
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="splash-footer-social-link" aria-label="LinkedIn">LinkedIn</a>
+                  <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="splash-footer-social-link" aria-label="YouTube">YouTube</a>
+                </div>
+              </div>
+            </div>
+            <p className="splash-footer-description">
+              Discover our zero tips office lunch delivery service, catering for large events, group ordering, and subsidized lunch programs with trypicnic.com. Elevate your company's food experience with tailored solutions for businesses
+            </p>
+          </div>
+          <div className="splash-footer-bottom">
+            <div className="splash-footer-legal-row">
+              <p className="splash-footer-copyright">© 2024 Picnic inc. All rights reserved.</p>
+              <nav className="splash-footer-links" aria-label="Footer navigation">
+                <div className="splash-footer-link-col">
+                  <span className="splash-footer-link-header">Get started</span>
+                  <a href="#" className="splash-footer-link">Request Picnic for your office</a>
+                  <a href="#" className="splash-footer-link">Become a restaurant partner</a>
+                </div>
+                <div className="splash-footer-link-col">
+                  <span className="splash-footer-link-header">Our services</span>
+                  <a href="#" className="splash-footer-link">Office meals</a>
+                  <a href="#" className="splash-footer-link">Group ordering</a>
+                  <a href="#" className="splash-footer-link">Catering</a>
+                  <a href="#" className="splash-footer-link">Subsidized meals</a>
+                  <a href="#" className="splash-footer-link">Office building delivery</a>
+                </div>
+                <div className="splash-footer-link-col">
+                  <span className="splash-footer-link-header">Resources</span>
+                  <a href="#" className="splash-footer-link">Picnic blog</a>
+                  <a href="#" className="splash-footer-link">Privacy</a>
+                  <a href="#" className="splash-footer-link">Terms</a>
+                  <a href="#" className="splash-footer-link">Press</a>
+                </div>
+                <div className="splash-footer-link-col">
+                  <span className="splash-footer-link-header">Company</span>
+                  <a href="#" className="splash-footer-link">About</a>
+                </div>
+                <div className="splash-footer-link-col">
+                  <span className="splash-footer-link-header">Get Help</span>
+                  <a href="#" className="splash-footer-link">Restaurant support</a>
+                </div>
+                <div className="splash-footer-link-col">
+                  <span className="splash-footer-link-header">Legal</span>
+                  <a href="#" className="splash-footer-link">Terms of service</a>
+                  <a href="#" className="splash-footer-link">Privacy policy</a>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

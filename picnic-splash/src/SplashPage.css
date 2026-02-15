@@ -410,3 +410,228 @@
   }
 
 }
+
+/* Bouncing cards section */
+.splash-bounce-cards {
+  width: 100%;
+  padding: 64px 24px 80px;
+  background: var(--splash-bg, #faf9f4);
+  border-top: 2px solid #f74c25;
+}
+
+.splash-bounce-cards-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.splash-bounce-cards-icon {
+  width: 92px;
+  height: 76px;
+  object-fit: contain;
+}
+
+.splash-bounce-cards-title {
+  font-family: 'P22 Mackinac Pro', serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 60px);
+  line-height: 1.06;
+  letter-spacing: -0.029em;
+  color: var(--splash-accent);
+  margin: 0;
+  text-align: center;
+}
+
+.splash-bounce-cards-subtitle {
+  font-family: 'P22 Mackinac Pro', serif;
+  font-weight: 500;
+  font-size: clamp(20px, 2.5vw, 36px);
+  line-height: 1.06;
+  letter-spacing: -0.048em;
+  color: var(--splash-accent);
+  margin: 0;
+  text-align: center;
+}
+
+.splash-bounce-cards-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 420px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.splash-bounce-cards-inner > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Shift the card fan left so it’s visually centered (fan extends more to the right) */
+.splash-bounce-cards-stack {
+  transform: translateX(-130px);
+}
+
+/* Footer – Figma 731-7013 */
+.splash-footer {
+  width: 100%;
+  background: #f74c25;
+  padding: 120px 20px 20px;
+  color: #f7f6f2;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.splash-footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 140px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.splash-footer-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.splash-footer-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.splash-footer-logo {
+  width: 223px;
+  height: 72px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.splash-footer-social {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.splash-footer-social-label {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.1;
+  letter-spacing: -0.004em;
+  margin: 0;
+  color: #f7f6f2;
+}
+
+.splash-footer-social-links {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.splash-footer-social-link {
+  font-weight: 500;
+  font-size: 14px;
+  color: #feede9;
+  text-decoration: none;
+  padding: 8px 0;
+}
+
+.splash-footer-social-link:hover {
+  text-decoration: underline;
+  color: #f7f6f2;
+}
+
+.splash-footer-description {
+  max-width: 670px;
+  font-weight: 500;
+  font-size: clamp(18px, 2vw, 30px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: #f7f6f2;
+}
+
+.splash-footer-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 76px;
+  flex-wrap: wrap;
+}
+
+.splash-footer-legal-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.splash-footer-copyright {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.3;
+  margin: 0;
+  color: #f7f6f2;
+  flex-shrink: 0;
+}
+
+.splash-footer-links {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding-top: 20px;
+  flex-wrap: wrap;
+}
+
+.splash-footer-link-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 210px;
+  min-width: 0;
+}
+
+.splash-footer-link-header {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.3;
+  opacity: 0.5;
+  color: #f7f6f2;
+}
+
+.splash-footer-link {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.3;
+  color: #f7f6f2;
+  text-decoration: none;
+}
+
+.splash-footer-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .splash-footer-top {
+    flex-direction: column;
+  }
+
+  .splash-footer-description {
+    max-width: 100%;
+  }
+
+  .splash-footer-content {
+    gap: 80px;
+  }
+}
