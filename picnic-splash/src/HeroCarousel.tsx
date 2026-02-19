@@ -21,6 +21,8 @@ export interface HeroCarouselProps {
   intervalMs?: number
   /** Growth banner text above the header */
   bannerText?: string
+  /** Optional icon URL for the banner (e.g. discount icon) */
+  bannerIconUrl?: string
   /** Header logo label */
   logoLabel?: string
   /** Show Log in / Sign up in header */
@@ -33,7 +35,8 @@ const DEFAULT_INTERVAL = 6000
 export function HeroCarousel({
   slides,
   intervalMs = DEFAULT_INTERVAL,
-  bannerText = 'Take $20 off your first order with code · tryme',
+  bannerText = '$50 off your first order with code: tryme',
+  bannerIconUrl,
   logoLabel = 'Picnic',
   showAuthButtons = true,
   onCtaClick,
@@ -70,6 +73,16 @@ export function HeroCarousel({
 
   const next = useCallback(() => goTo(indexRef.current + 1), [goTo])
   const prev = useCallback(() => goTo(indexRef.current - 1), [goTo])
+
+  // Preload all slide background images so transitions never show a black flash
+  useEffect(() => {
+    slides.forEach((s) => {
+      if (s.backgroundImage) {
+        const img = new Image()
+        img.src = s.backgroundImage
+      }
+    })
+  }, [slides])
 
   useEffect(() => {
     if (!intervalMs || isPaused || slides.length <= 1) return
@@ -116,6 +129,14 @@ export function HeroCarousel({
       <div className="hero-carousel__top">
         {bannerText && (
           <div className="hero-carousel__banner">
+            {bannerIconUrl && (
+              <img
+                src={bannerIconUrl}
+                alt=""
+                className="hero-carousel__banner-icon"
+                aria-hidden
+              />
+            )}
             <span className="hero-carousel__banner-text">{bannerText}</span>
           </div>
         )}
