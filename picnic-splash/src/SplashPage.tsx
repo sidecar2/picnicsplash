@@ -82,7 +82,8 @@ const HERO_BULLETS = [
 
 const TICKER_ITEMS = [
   '50+ Restaurants delivered to Downtown LA',
-  "Try Picnic today with 'no setup or contract'",
+  "Try Picnic today with no setup or contract",
+  'Now Available in Los Angeles',
 ] as const
 
 const TICKER_SEPARATOR = '/images/general/Ticker-Dot.svg'
@@ -265,10 +266,11 @@ export function SplashPage() {
       {/* Hero carousel (rotating copy + background images) */}
       <HeroCarousel
         slides={HERO_CAROUSEL_SLIDES}
-        intervalMs={5000}
-        bannerText="Take $20 off your first order with code · tryme"
+        intervalMs={6000}
+        bannerText="$50 off your first order with code: tryme"
+        bannerIconUrl={assetUrl('/images/general/discount.svg')}
         logoLabel="Picnic"
-        showAuthButtons={true}
+        showAuthButtons={false}
       />
 
       {/* Full-width ticker – Figma 691-1969 (no horizontal padding) */}
@@ -276,7 +278,7 @@ export function SplashPage() {
         <div className="splash-hero-ticker-wrap">
           <div className="splash-hero-ticker">
             <div className="splash-hero-ticker-track">
-              {[...tickerSegments(), ...tickerSegments()].map((seg, i) =>
+              {[...tickerSegments(), ...tickerSegments(), ...tickerSegments(), ...tickerSegments()].map((seg, i) =>
                 seg.type === 'text' ? (
                   <span key={i} className="splash-hero-ticker-item">
                     {seg.value}

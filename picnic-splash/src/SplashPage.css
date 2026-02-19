@@ -89,6 +89,8 @@
   display: flex;
   gap: 72px;
   width: max-content;
+  /* Desktop: slower scroll; overridden below for mobile */
+  animation: splash-hero-ticker-scroll 70s linear infinite;
 }
 
 .splash-hero-ticker-item {
@@ -110,12 +112,16 @@
 
 @keyframes splash-hero-ticker-scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-25%); }
 }
 
 @media (max-width: 767px) {
   .splash-hero-ticker-track {
     animation: splash-hero-ticker-scroll 25s linear infinite;
+  }
+
+  .splash-bounce-cards {
+    display: none;
   }
 }
 
@@ -344,6 +350,7 @@
 }
 
 .splash-third-pill {
+  display: none;
   font-family: 'P22 Mackinac Pro', serif;
   font-weight: 500;
   font-size: clamp(20px, 2.5vw, 24.5px);
@@ -358,8 +365,39 @@
   z-index: 1;
 }
 
+/* Mobile: stack text and image vertically (text on top, image below) */
+@media (max-width: 899px) {
+  .splash-third-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .splash-third-content {
+    text-align: center;
+  }
+
+  .splash-third-title {
+    width: 100%;
+  }
+
+  .splash-third-content,
+  .splash-third-container,
+  .splash-third-visual {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .splash-third-visual {
+    min-height: 320px;
+    justify-content: center;
+  }
+}
+
 @media (min-width: 900px) {
   .splash-third-inner {
+    display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     gap: 20px 48px;
