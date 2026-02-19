@@ -270,7 +270,7 @@ export function SplashPage() {
         bannerText="$50 off your first order with code: tryme"
         bannerIconUrl={assetUrl('/images/general/discount.svg')}
         logoLabel="Picnic"
-        showAuthButtons={false}
+        showAuthButtons={false as boolean}
       />
 
       {/* Full-width ticker – Figma 691-1969 (no horizontal padding) */}
