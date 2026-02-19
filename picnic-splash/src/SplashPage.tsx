@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { SplashStoreCarousel } from './SplashStoreCarousel'
 import type { SplashStoreCarouselItem } from './SplashStoreCarousel'
 import { HeroCarousel } from './HeroCarousel'
-import type { HeroCarouselSlide } from './HeroCarousel'
+import type { HeroCarouselSlide, HeroCarouselProps } from './HeroCarousel'
 // @ts-ignore - BounceCards is .jsx
 import BounceCards from './components/BounceCards'
 import './SplashPage.css'
@@ -265,12 +265,14 @@ export function SplashPage() {
     <div className="splash">
       {/* Hero carousel (rotating copy + background images) */}
       <HeroCarousel
-        slides={HERO_CAROUSEL_SLIDES}
-        intervalMs={6000}
-        bannerText="$50 off your first order with code: tryme"
-        bannerIconUrl={assetUrl('/images/general/discount.svg')}
-        logoLabel="Picnic"
-        showAuthButtons={false as boolean}
+        {...({
+          slides: HERO_CAROUSEL_SLIDES,
+          intervalMs: 6000,
+          bannerText: "$50 off your first order with code: tryme",
+          bannerIconUrl: assetUrl('/images/general/discount.svg'),
+          logoLabel: 'Picnic',
+          showAuthButtons: false,
+        } as HeroCarouselProps)}
       />
 
       {/* Full-width ticker – Figma 691-1969 (no horizontal padding) */}
