@@ -87,6 +87,8 @@ interface ItemCarouselProps {
     favoritedIds?: Set<string | number>;
     /** Whether to show navigation arrows (default: true) */
     showArrows?: boolean;
+    /** Whether to show the add/favorite button on items (default: true) */
+    showFavoriteButton?: boolean;
     /** Additional CSS class name */
     className?: string;
     /** Additional inline styles */
@@ -219,4 +221,136 @@ interface BannerProps {
 }
 declare const Banner: react.ForwardRefExoticComponent<BannerProps & react.RefAttributes<HTMLDivElement>>;
 
-export { Banner, type BannerProps, type BannerTheme, FilterChip, FilterChipCarousel, type FilterChipCarouselProps, type FilterChipItem, type FilterChipProps, Header, type HeaderProps, ITEM_CARD_BADGE_COLORS, ItemCard, type ItemCardProps, ItemCarousel, type ItemCarouselItem, type ItemCarouselProps, StoreCard, type StoreCardProps, StoreCarousel, type StoreCarouselItem, type StoreCarouselProps };
+interface ScheduledOrderProps {
+    /** Whether this is an active/in-progress order */
+    isActive?: boolean;
+    /** Date label (e.g., "Weds, 3/17") - shown for default state */
+    dateLabel?: string;
+    /** Meal name */
+    mealName: string;
+    /** Restaurant name */
+    restaurant: string;
+    /** Order status (e.g., "Order en route") - shown for active state */
+    status?: string;
+    /** Item count - shown for active state */
+    itemCount?: number;
+    /** ETA time (e.g., "12:00pm") - shown for active state */
+    eta?: string;
+    /** Avatar image URL */
+    avatarUrl?: string;
+    /** Progress percentage (0-100) - shown for active state */
+    progress?: number;
+    /** Whether to hide the progress bar (useful when parent handles it) */
+    hideProgress?: boolean;
+    /** Whether to show bottom border */
+    showBorder?: boolean;
+    /** Additional CSS class name */
+    className?: string;
+    /** Additional inline styles */
+    style?: CSSProperties;
+}
+declare const ScheduledOrder: react.ForwardRefExoticComponent<ScheduledOrderProps & react.RefAttributes<HTMLDivElement>>;
+
+interface ScheduledOrderItem {
+    /** Unique identifier */
+    id: string | number;
+    /** Date label (e.g., "Weds, 3/17") */
+    dateLabel: string;
+    /** Meal name */
+    mealName: string;
+    /** Restaurant name */
+    restaurant: string;
+    /** Avatar image URL */
+    avatarUrl?: string;
+}
+interface ActiveOrderData {
+    /** Order status text (e.g., "Order en route") */
+    status: string;
+    /** Restaurant name */
+    restaurant: string;
+    /** Number of items */
+    itemCount: number;
+    /** Estimated time of arrival */
+    eta: string;
+    /** Avatar image URL */
+    avatarUrl?: string;
+    /** Progress percentage (0-100) */
+    progress?: number;
+}
+interface FloatingPanelProps {
+    /** Number of upcoming orders */
+    upcomingCount: number;
+    /** Active order details (when provided, shows active order state) */
+    activeOrder?: ActiveOrderData;
+    /** List of scheduled orders to display when expanded */
+    scheduledOrders?: ScheduledOrderItem[];
+    /** Whether the panel is expanded */
+    isExpanded?: boolean;
+    /** Callback when expand/collapse is toggled */
+    onToggle?: () => void;
+    /** Callback when the panel is clicked */
+    onClick?: () => void;
+    /** Callback when "View rotation" is clicked */
+    onViewRotation?: () => void;
+    /** Additional CSS class name */
+    className?: string;
+    /** Additional inline styles */
+    style?: CSSProperties;
+}
+declare const FloatingPanel: react.ForwardRefExoticComponent<FloatingPanelProps & react.RefAttributes<HTMLDivElement>>;
+
+interface NutritionInfo {
+    calories?: number;
+    fat?: string;
+    carbs?: string;
+    protein?: string;
+}
+interface Tag {
+    id: string | number;
+    label: string;
+}
+interface CustomizationOption {
+    id: string | number;
+    label: string;
+    price?: number;
+    selected?: boolean;
+}
+interface CustomizationGroup {
+    id: string | number;
+    title: string;
+    requiredCount?: number;
+    options: CustomizationOption[];
+}
+interface ItemModalProps {
+    /** Whether the modal is open */
+    isOpen: boolean;
+    /** Item image URL */
+    imageUrl: string;
+    /** Item name */
+    itemName: string;
+    /** Item description */
+    description?: string;
+    /** Tags to display (e.g., "Gluten Free", "Contains Egg") */
+    tags?: Tag[];
+    /** Nutrition information */
+    nutrition?: NutritionInfo;
+    /** Customization groups */
+    customizations?: CustomizationGroup[];
+    /** Base price of the item */
+    basePrice: number;
+    /** Currency symbol (default: $) */
+    currency?: string;
+    /** Callback when modal is closed */
+    onClose?: () => void;
+    /** Callback when "Add to basket" is clicked */
+    onAddToBasket?: (selectedOptions: Record<string | number, (string | number)[]>, totalPrice: number) => void;
+    /** Callback when a date is selected from the schedule popover */
+    onScheduleMeal?: (date: Date) => void;
+    /** Additional CSS class name */
+    className?: string;
+    /** Additional inline styles */
+    style?: CSSProperties;
+}
+declare const ItemModal: react.ForwardRefExoticComponent<ItemModalProps & react.RefAttributes<HTMLDivElement>>;
+
+export { type ActiveOrderData, Banner, type BannerProps, type BannerTheme, type CustomizationGroup, type CustomizationOption, FilterChip, FilterChipCarousel, type FilterChipCarouselProps, type FilterChipItem, type FilterChipProps, FloatingPanel, type FloatingPanelProps, Header, type HeaderProps, ITEM_CARD_BADGE_COLORS, ItemCard, type ItemCardProps, ItemCarousel, type ItemCarouselItem, type ItemCarouselProps, ItemModal, type ItemModalProps, type NutritionInfo, ScheduledOrder, type ScheduledOrderItem, type ScheduledOrderProps, StoreCard, type StoreCardProps, StoreCarousel, type StoreCarouselItem, type StoreCarouselProps, type Tag };

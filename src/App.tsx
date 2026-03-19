@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { ItemCard, StoreCard, ItemCarousel, StoreCarousel, FilterChip, FilterChipCarousel, Header, Banner } from './lib'
-import type { ItemCarouselItem, StoreCarouselItem, FilterChipItem } from './lib'
+import { ItemCard, StoreCard, ItemCarousel, StoreCarousel, FilterChip, FilterChipCarousel, Header, Banner, FloatingPanel, ItemModal } from './lib'
+import type { ItemCarouselItem, StoreCarouselItem, FilterChipItem, CustomizationGroup, Tag, NutritionInfo } from './lib'
 import './App.css'
 
 function App() {
   const [favorites, setFavorites] = useState<Set<number>>(new Set())
   const [activeFilter, setActiveFilter] = useState<string | number | null>('price')
+  const [isPanelExpanded, setIsPanelExpanded] = useState(true)
+  const [isItemModalOpen, setIsItemModalOpen] = useState(false)
 
   const toggleFavorite = (id: number) => {
     setFavorites((prev) => {
@@ -236,6 +238,7 @@ function App() {
     { id: 'filter-chip-carousel', label: 'FilterChipCarousel' },
     { id: 'banner', label: 'Banner' },
     { id: 'header', label: 'Header' },
+    { id: 'floating-panel', label: 'FloatingPanel' },
   ]
 
   return (
@@ -521,6 +524,207 @@ function App() {
           </pre>
           <p className="props-caption">
             Props shown: <code>locationName</code> <code>orderTiming</code> <code>countdownText</code> <code>basketCount</code> <code>logoUrl</code>
+          </p>
+        </div>
+      </div>
+
+      {/* FloatingPanel Section */}
+      <div className="section" id="floating-panel">
+        <h2>FloatingPanel</h2>
+        <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', justifyContent: 'center', alignItems: 'flex-start' }}>
+          {/* Collapsed, No Active Order */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+            <span style={{ fontSize: 12, color: '#666' }}>Collapsed</span>
+            <FloatingPanel
+              upcomingCount={3}
+              isExpanded={false}
+              onToggle={() => {}}
+            />
+          </div>
+          {/* Collapsed, With Active Order */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+            <span style={{ fontSize: 12, color: '#666' }}>Collapsed + Active Order</span>
+            <FloatingPanel
+              upcomingCount={3}
+              isExpanded={false}
+              activeOrder={{
+                status: 'Order en route',
+                restaurant: 'Cava',
+                itemCount: 1,
+                eta: '12:00pm',
+                progress: 64,
+                avatarUrl: '/images/items/Cava--Harissa-Chicken-Bowl.png',
+              }}
+              onToggle={() => {}}
+            />
+          </div>
+          {/* Expanded, No Active Order */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+            <span style={{ fontSize: 12, color: '#666' }}>Expanded</span>
+            <FloatingPanel
+              upcomingCount={3}
+              isExpanded={true}
+              scheduledOrders={[
+                { id: 1, dateLabel: 'Weds, 3/17', mealName: 'ShackBurger', restaurant: 'Shake Shack', avatarUrl: '/images/items/Shake-Shack--ShackBurger.png' },
+                { id: 2, dateLabel: 'Thurs, 3/18', mealName: 'Chicken Caesar Wrap', restaurant: 'Ggiata', avatarUrl: '/images/items/Ggiata--The-Chicken-Caesar-Wrap.png' },
+                { id: 3, dateLabel: 'Fri, 3/19', mealName: 'Harvest Bowl', restaurant: 'Sweetgreen', avatarUrl: '/images/items/Sweetgreen--Harvest-Bowl.png' },
+              ]}
+              onToggle={() => {}}
+              onViewRotation={() => console.log('View rotation clicked')}
+            />
+          </div>
+          {/* Expanded, With Active Order - Interactive */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+            <span style={{ fontSize: 12, color: '#666' }}>Expanded + Active (Interactive)</span>
+            <FloatingPanel
+              upcomingCount={3}
+              isExpanded={isPanelExpanded}
+              activeOrder={{
+                status: 'Order en route',
+                restaurant: 'Cava',
+                itemCount: 1,
+                eta: '12:00pm',
+                progress: 64,
+                avatarUrl: '/images/items/Cava--Harissa-Chicken-Bowl.png',
+              }}
+              scheduledOrders={[
+                { id: 1, dateLabel: 'Weds, 3/17', mealName: 'Impossible Taco Salad', restaurant: 'Mendocino Farms', avatarUrl: '/images/items/Mendocino-Farms--Impossible-Taco-Salad.png' },
+                { id: 2, dateLabel: 'Thurs, 3/18', mealName: 'Harvest Bowl', restaurant: 'Sweetgreen', avatarUrl: '/images/items/Sweetgreen--Harvest-Bowl.png' },
+              ]}
+              onToggle={() => setIsPanelExpanded(!isPanelExpanded)}
+              onViewRotation={() => console.log('View rotation clicked')}
+            />
+          </div>
+        </div>
+        <div className="usage">
+          <h3>Usage</h3>
+          <pre>
+            <code>{`<FloatingPanel
+  upcomingCount={3}
+  isExpanded={true}
+  activeOrder={{
+    status: 'Order en route',
+    restaurant: 'Cava',
+    itemCount: 1,
+    eta: '12:00pm',
+    progress: 64,
+  }}
+  scheduledOrders={[
+    { id: 1, dateLabel: 'Weds, 3/17', mealName: 'Goop Bowl', restaurant: 'Goop Kitchen' },
+  ]}
+  onToggle={() => {}}
+  onViewRotation={() => {}}
+/>`}</code>
+          </pre>
+          <p className="props-caption">
+            Props: <code>upcomingCount</code> <code>isExpanded</code> <code>activeOrder</code> <code>scheduledOrders</code> <code>onToggle</code> <code>onViewRotation</code>
+          </p>
+        </div>
+      </div>
+
+      {/* ItemModal Section */}
+      <div className="component-section">
+        <h2>ItemModal</h2>
+        <p>A modal component for displaying item details and customization options.</p>
+
+        <div className="demo-box" style={{ padding: 32 }}>
+          <button
+            onClick={() => setIsItemModalOpen(true)}
+            style={{
+              padding: '12px 24px',
+              backgroundColor: '#F74C25',
+              color: 'white',
+              border: 'none',
+              borderRadius: 8,
+              fontSize: 16,
+              fontWeight: 500,
+              cursor: 'pointer',
+            }}
+          >
+            Open Item Modal
+          </button>
+
+          <ItemModal
+            isOpen={isItemModalOpen}
+            imageUrl="/images/items/Sweetgreen--Harvest-Bowl.png"
+            itemName="Winter Harvest Bowl"
+            description="Antibiotic-free roasted chicken, maple glazed squash, charred balsamic cabbage, goat cheese, almonds, organic shredded kale, wild rice, apple vinaigrette"
+            tags={[
+              { id: 1, label: 'Gluten Free' },
+              { id: 2, label: 'Contains Egg' },
+            ]}
+            nutrition={{
+              calories: 695,
+              fat: '35g',
+              carbs: '61g',
+              protein: '41g',
+            }}
+            customizations={[
+              {
+                id: 'bun',
+                title: 'Change your bun style',
+                requiredCount: 2,
+                options: [
+                  { id: 'gf', label: 'Gluten Free Bun', price: 0.99 },
+                  { id: 'lettuce', label: 'Lettuce Wrap', price: 0.99 },
+                  { id: 'brioche', label: 'Brioche Bun', price: 0.99 },
+                  { id: 'whole-wheat', label: 'Whole Wheat Bun', price: 0.99 },
+                  { id: 'sesame', label: 'Sesame Bun', price: 0.99 },
+                ],
+              },
+              {
+                id: 'toppings',
+                title: 'Add extra toppings',
+                options: [
+                  { id: 'avocado', label: 'Avocado', price: 1.99 },
+                  { id: 'bacon', label: 'Crispy Bacon', price: 1.49 },
+                  { id: 'cheese', label: 'Extra Cheese', price: 0.99 },
+                  { id: 'mushrooms', label: 'Sautéed Mushrooms', price: 1.29 },
+                ],
+              },
+              {
+                id: 'sides',
+                title: 'Choose a side',
+                options: [
+                  { id: 'fries', label: 'French Fries', price: 2.99 },
+                  { id: 'salad', label: 'Side Salad', price: 3.49 },
+                  { id: 'soup', label: 'Soup of the Day', price: 3.99 },
+                ],
+              },
+            ]}
+            basePrice={14.50}
+            onClose={() => setIsItemModalOpen(false)}
+            onAddToBasket={(selections, total) => {
+              console.log('Added to basket:', selections, 'Total:', total)
+              setIsItemModalOpen(false)
+            }}
+            onScheduleMeal={(date) => {
+              console.log('Schedule meal for:', date.toDateString())
+              setIsItemModalOpen(false)
+            }}
+          />
+        </div>
+
+        <div className="props-box">
+          <h3>Usage</h3>
+          <pre>
+            <code>{`<ItemModal
+  isOpen={true}
+  imageUrl="/images/items/item.png"
+  itemName="Winter Harvest Bowl"
+  description="Delicious bowl with..."
+  tags={[{ id: 1, label: 'Gluten Free' }]}
+  nutrition={{ calories: 695, fat: '35g' }}
+  customizations={[
+    { id: 'bun', title: 'Choose bun', options: [...] }
+  ]}
+  basePrice={14.50}
+  onClose={() => {}}
+  onAddToBasket={(selections, total) => {}}
+/>`}</code>
+          </pre>
+          <p className="props-caption">
+            Props: <code>isOpen</code> <code>imageUrl</code> <code>itemName</code> <code>description</code> <code>tags</code> <code>nutrition</code> <code>customizations</code> <code>basePrice</code> <code>onClose</code> <code>onAddToBasket</code> <code>onScheduleMeal</code>
           </p>
         </div>
       </div>

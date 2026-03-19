@@ -24,10 +24,13 @@ __export(index_exports, {
   Banner: () => Banner,
   FilterChip: () => FilterChip,
   FilterChipCarousel: () => FilterChipCarousel,
+  FloatingPanel: () => FloatingPanel,
   Header: () => Header,
   ITEM_CARD_BADGE_COLORS: () => ITEM_CARD_BADGE_COLORS,
   ItemCard: () => ItemCard,
   ItemCarousel: () => ItemCarousel,
+  ItemModal: () => ItemModal,
+  ScheduledOrder: () => ScheduledOrder,
   StoreCard: () => StoreCard,
   StoreCarousel: () => StoreCarousel
 });
@@ -601,6 +604,7 @@ var ItemCarousel = (0, import_react3.forwardRef)(
     onItemFavorite,
     favoritedIds = /* @__PURE__ */ new Set(),
     showArrows = true,
+    showFavoriteButton = true,
     className,
     style
   }, ref) => {
@@ -719,6 +723,7 @@ var ItemCarousel = (0, import_react3.forwardRef)(
                       badgeColor: item.badgeColor,
                       currency: item.currency,
                       isFavorited: favoritedIds.has(item.id),
+                      showFavoriteButton,
                       onFavorite: () => onItemFavorite?.(item),
                       onClick: () => onItemClick?.(item),
                       style: { width: "100%" }
@@ -1867,15 +1872,1253 @@ var Banner = (0, import_react8.forwardRef)(
   }
 );
 Banner.displayName = "Banner";
+
+// src/lib/ScheduledOrder.tsx
+var import_react9 = require("react");
+var import_jsx_runtime9 = require("react/jsx-runtime");
+var styles9 = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+    paddingBottom: 12,
+    position: "relative",
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+  },
+  containerWithBorder: {
+    borderBottom: "1px solid rgba(255, 255, 255, 0.24)"
+  },
+  labelRow: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4
+  },
+  activeDot: {
+    width: 4,
+    height: 4,
+    borderRadius: "50%",
+    backgroundColor: "#F97051",
+    flexShrink: 0
+  },
+  dateLabel: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "rgba(250, 247, 240, 0.63)",
+    margin: 0
+  },
+  activeLabel: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "#FAF7F0",
+    margin: 0
+  },
+  contentRow: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12
+  },
+  textContent: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    gap: 4,
+    flex: 1
+  },
+  mealName: {
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "rgba(250, 247, 240, 0.9)",
+    margin: 0
+  },
+  activeMealName: {
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "#FAF7F0",
+    margin: 0
+  },
+  restaurant: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "rgba(250, 247, 240, 0.63)",
+    margin: 0
+  },
+  activeDetails: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "rgba(250, 247, 240, 0.63)",
+    margin: 0
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    objectFit: "cover",
+    flexShrink: 0,
+    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)"
+  },
+  avatarPlaceholder: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    flexShrink: 0,
+    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15)"
+  },
+  progressContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor: "rgba(255, 255, 255, 0.2)"
+  },
+  progressBar: {
+    height: "100%",
+    backgroundColor: "#F74C25",
+    transition: "width 0.3s ease"
+  }
+};
+var ScheduledOrder = (0, import_react9.forwardRef)(
+  ({
+    isActive = false,
+    dateLabel,
+    mealName,
+    restaurant,
+    status,
+    itemCount,
+    eta,
+    avatarUrl,
+    progress = 0,
+    hideProgress = false,
+    showBorder = false,
+    className,
+    style
+  }, ref) => {
+    const detailsText = isActive && itemCount && eta ? `${restaurant} \xB7 ${itemCount} item${itemCount !== 1 ? "s" : ""} \xB7 ETA ${eta}` : restaurant;
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
+      "div",
+      {
+        ref,
+        className,
+        style: {
+          ...styles9.container,
+          ...showBorder && !isActive ? styles9.containerWithBorder : {},
+          ...style
+        },
+        "data-component": "scheduled-order",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { style: styles9.labelRow, children: [
+            isActive && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: styles9.activeDot }),
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { style: isActive ? styles9.activeLabel : styles9.dateLabel, children: isActive ? "Today" : dateLabel })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { style: styles9.contentRow, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { style: styles9.textContent, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { style: isActive ? styles9.activeMealName : styles9.mealName, children: isActive && status ? status : mealName }),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { style: isActive ? styles9.activeDetails : styles9.restaurant, children: detailsText })
+            ] }),
+            avatarUrl ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("img", { src: avatarUrl, alt: "", style: styles9.avatar }) : /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: styles9.avatarPlaceholder })
+          ] }),
+          isActive && !hideProgress && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: styles9.progressContainer, children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: { ...styles9.progressBar, width: `${Math.min(100, Math.max(0, progress))}%` } }) })
+        ]
+      }
+    );
+  }
+);
+ScheduledOrder.displayName = "ScheduledOrder";
+
+// src/lib/FloatingPanel.tsx
+var import_react10 = require("react");
+var import_jsx_runtime10 = require("react/jsx-runtime");
+var styles10 = {
+  panel: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    width: 368,
+    backgroundColor: "rgba(20, 20, 20, 0.95)",
+    borderRadius: "24px 24px 0 0",
+    backdropFilter: "blur(4px)",
+    WebkitBackdropFilter: "blur(4px)",
+    boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.11)",
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    overflow: "hidden",
+    position: "relative"
+  },
+  panelExpanded: {
+    boxShadow: "0px 4px 28px 0px rgba(0, 0, 0, 0.22)"
+  },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: "16px 20px"
+  },
+  headerLeft: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    flex: 1
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: 400,
+    lineHeight: "20px",
+    letterSpacing: "-0.05em",
+    color: "#EFEBE5",
+    margin: 0,
+    fontVariantNumeric: "lining-nums tabular-nums"
+  },
+  toggleButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 24,
+    height: 24,
+    background: "none",
+    border: "none",
+    padding: 0,
+    cursor: "pointer",
+    transition: "transform 0.2s ease"
+  },
+  collapsedActiveSection: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "stretch",
+    alignItems: "center",
+    gap: 8,
+    padding: "8px 20px 0",
+    boxShadow: "0px 4px 28px 0px rgba(0, 0, 0, 0.22)",
+    borderRadius: "20px 20px 0 0"
+  },
+  listSection: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+    padding: "8px 20px",
+    boxShadow: "0px 4px 28px 0px rgba(0, 0, 0, 0.22)",
+    borderRadius: "20px 20px 0 0"
+  },
+  listSectionWithActive: {
+    padding: "8px 20px 16px",
+    boxShadow: "none",
+    borderRadius: 0
+  },
+  viewRotationLink: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
+    padding: "12px 0"
+  },
+  viewRotationText: {
+    fontSize: 16,
+    fontWeight: 500,
+    lineHeight: "18px",
+    letterSpacing: "-0.0018em",
+    color: "#FAF7F0",
+    margin: 0,
+    cursor: "pointer",
+    background: "none",
+    border: "none",
+    fontFamily: "inherit"
+  },
+  progressContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 4,
+    backgroundColor: "rgba(255, 255, 255, 0.2)"
+  },
+  progressBar: {
+    height: "100%",
+    backgroundColor: "#F74C25",
+    transition: "width 0.3s ease"
+  }
+};
+var AutoModeIcon = () => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("g", { clipPath: "url(#clip0_automode)", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    "path",
+    {
+      d: "M11.2917 11.2915L10.375 13.3332C10.3056 13.4998 10.1806 13.5832 10 13.5832C9.81944 13.5832 9.69444 13.4998 9.625 13.3332L8.6875 11.2915L6.66667 10.3748C6.5 10.3054 6.41667 10.1804 6.41667 9.99984C6.41667 9.81928 6.5 9.69428 6.66667 9.62484L8.6875 8.68734L9.625 6.6665C9.69444 6.49984 9.81944 6.4165 10 6.4165C10.1806 6.4165 10.3056 6.49984 10.375 6.6665L11.2917 8.68734L13.3333 9.62484C13.5 9.69428 13.5833 9.81928 13.5833 9.99984C13.5833 10.1804 13.5 10.3054 13.3333 10.3748L11.2917 11.2915ZM15.25 17.4998L16.6667 17.4998C16.9028 17.4998 17.1007 17.5797 17.2604 17.7394C17.4201 17.8991 17.5 18.0971 17.5 18.3332C17.5 18.5693 17.4201 18.7672 17.2604 18.9269C17.1007 19.0866 16.9028 19.1665 16.6667 19.1665L13.3333 19.1665C13.0972 19.1665 12.8993 19.0866 12.7396 18.9269C12.5799 18.7672 12.5 18.5693 12.5 18.3332L12.5 14.9998C12.5 14.7637 12.5799 14.5658 12.7396 14.4061C12.8993 14.2464 13.0972 14.1665 13.3333 14.1665C13.5694 14.1665 13.7674 14.2464 13.9271 14.4061C14.0868 14.5658 14.1667 14.7637 14.1667 14.9998L14.1667 16.2082C15.2083 15.4998 16.0243 14.6005 16.6146 13.5103C17.2049 12.42 17.5 11.2498 17.5 9.99984C17.5 8.55539 17.125 7.23595 16.375 6.0415C15.625 4.84706 14.6181 3.93039 13.3542 3.2915C13.1181 3.1665 12.9306 3.00331 12.7917 2.80192C12.6528 2.60053 12.6111 2.36789 12.6667 2.10401C12.7222 1.85401 12.8646 1.69081 13.0937 1.61442C13.3229 1.53803 13.5694 1.56234 13.8333 1.68734C15.4444 2.43734 16.7361 3.55539 17.7083 5.0415C18.6806 6.52761 19.1667 8.18039 19.1667 9.99984C19.1667 11.4998 18.8229 12.9061 18.1354 14.2186C17.4479 15.5311 16.4861 16.6248 15.25 17.4998ZM9.16667 18.2707C9.16667 18.5068 9.07986 18.6978 8.90625 18.8436C8.73264 18.9894 8.52778 19.0415 8.29167 18.9998C7.63889 18.8609 7.0382 18.6804 6.48958 18.4582C5.94097 18.2359 5.38889 17.9373 4.83333 17.5623C4.625 17.4234 4.50694 17.2429 4.47917 17.0207C4.45139 16.7984 4.52778 16.5971 4.70833 16.4165C4.90278 16.2221 5.11458 16.1248 5.34375 16.1248C5.57292 16.1248 5.80556 16.2012 6.04167 16.354C6.40278 16.5901 6.76389 16.7776 7.125 16.9165C7.48611 17.0554 7.88195 17.1804 8.3125 17.2915C8.5625 17.3471 8.76736 17.4616 8.92708 17.6353C9.08681 17.8089 9.16667 18.0207 9.16667 18.2707ZM1.70833 10.8332C1.97222 10.8332 2.1875 10.913 2.35417 11.0728C2.52083 11.2325 2.63194 11.4443 2.6875 11.7082C2.78472 12.1248 2.90972 12.5103 3.0625 12.8644C3.21528 13.2186 3.40972 13.5762 3.64583 13.9373C3.79861 14.1596 3.86806 14.3853 3.85417 14.6144C3.84028 14.8436 3.73611 15.0554 3.54167 15.2498C3.375 15.4165 3.18403 15.4894 2.96875 15.4686C2.75347 15.4478 2.56944 15.3401 2.41667 15.1457C2.05556 14.604 1.76042 14.0658 1.53125 13.5311C1.30208 12.9964 1.125 12.4026 1 11.7498C0.958334 11.4998 1.00694 11.2846 1.14583 11.104C1.28472 10.9234 1.47222 10.8332 1.70833 10.8332ZM3.54167 4.70817C3.73611 4.90262 3.83681 5.11789 3.84375 5.354C3.85069 5.59012 3.77778 5.81928 3.625 6.0415C3.38889 6.40262 3.20139 6.76373 3.0625 7.12484C2.92361 7.48595 2.79861 7.88178 2.6875 8.31234C2.63194 8.56234 2.51736 8.7672 2.34375 8.92692C2.17014 9.08664 1.95833 9.1665 1.70833 9.1665C1.47222 9.1665 1.28472 9.0797 1.14583 8.90609C1.00694 8.73248 0.958334 8.52762 1 8.2915C1.125 7.62484 1.29861 7.02067 1.52083 6.479C1.74306 5.93734 2.04167 5.38873 2.41667 4.83317C2.55556 4.63873 2.73611 4.52762 2.95833 4.49984C3.18056 4.47206 3.375 4.5415 3.54167 4.70817ZM9.16667 1.70817C9.16667 1.97206 9.08681 2.18734 8.92708 2.35401C8.76736 2.52067 8.55556 2.63178 8.29167 2.68734C7.86111 2.79845 7.46875 2.92692 7.11458 3.07276C6.76042 3.21859 6.39583 3.40956 6.02083 3.64567C5.79861 3.79845 5.57292 3.86789 5.34375 3.854C5.11458 3.84012 4.90278 3.73595 4.70833 3.5415C4.54167 3.37484 4.47222 3.18387 4.5 2.96859C4.52778 2.75331 4.63889 2.56928 4.83333 2.41651C5.38889 2.04151 5.9375 1.74289 6.47917 1.52067C7.02083 1.29845 7.625 1.12484 8.29167 0.999838C8.52778 0.958172 8.73264 1.00678 8.90625 1.14567C9.07986 1.28456 9.16667 1.47206 9.16667 1.70817Z",
+      fill: "#EFEBE5"
+    }
+  ) }),
+  /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("defs", { children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("clipPath", { id: "clip0_automode", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("rect", { width: "20", height: "20", fill: "white", transform: "translate(0 20) rotate(-90)" }) }) })
+] });
+var ChevronIcon = ({ isUp }) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+  "svg",
+  {
+    width: "24",
+    height: "24",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    style: { transform: isUp ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 0.2s ease" },
+    children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("path", { d: "M7.41 15.41L12 10.83L16.59 15.41L18 14L12 8L6 14L7.41 15.41Z", fill: "#EFEBE5" })
+  }
+);
+var FloatingPanel = (0, import_react10.forwardRef)(
+  ({
+    upcomingCount,
+    activeOrder,
+    scheduledOrders = [],
+    isExpanded = false,
+    onToggle,
+    onClick,
+    onViewRotation,
+    className,
+    style
+  }, ref) => {
+    const hasActiveOrder = !!activeOrder;
+    const showCollapsedActive = !isExpanded && hasActiveOrder;
+    const showExpandedList = isExpanded;
+    return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+      "div",
+      {
+        ref,
+        className,
+        style: {
+          ...styles10.panel,
+          ...isExpanded || hasActiveOrder ? styles10.panelExpanded : {},
+          paddingBottom: isExpanded ? 12 : hasActiveOrder ? 8 : 4,
+          ...style
+        },
+        onClick,
+        "data-component": "floating-panel",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+            "div",
+            {
+              style: { ...styles10.header, cursor: "pointer" },
+              onClick: (e) => {
+                e.stopPropagation();
+                onToggle?.();
+              },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: styles10.headerLeft, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(AutoModeIcon, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: styles10.headerText, children: [
+                    upcomingCount,
+                    " upcoming order",
+                    upcomingCount !== 1 ? "s" : "",
+                    " "
+                  ] })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+                  "button",
+                  {
+                    style: styles10.toggleButton,
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      onToggle?.();
+                    },
+                    "aria-label": isExpanded ? "Collapse panel" : "Expand panel",
+                    children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ChevronIcon, { isUp: isExpanded })
+                  }
+                )
+              ]
+            }
+          ),
+          showCollapsedActive && activeOrder && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: styles10.collapsedActiveSection, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              ScheduledOrder,
+              {
+                isActive: true,
+                mealName: activeOrder.status,
+                restaurant: activeOrder.restaurant,
+                status: activeOrder.status,
+                itemCount: activeOrder.itemCount,
+                eta: activeOrder.eta,
+                avatarUrl: activeOrder.avatarUrl,
+                hideProgress: true,
+                style: { flex: 1 }
+              }
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: styles10.progressContainer, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { ...styles10.progressBar, width: `${Math.min(100, Math.max(0, activeOrder.progress || 0))}%` } }) })
+          ] }),
+          showExpandedList && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: {
+            ...styles10.listSection,
+            ...hasActiveOrder ? styles10.listSectionWithActive : {}
+          }, children: [
+            activeOrder && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              ScheduledOrder,
+              {
+                isActive: true,
+                mealName: activeOrder.status,
+                restaurant: activeOrder.restaurant,
+                status: activeOrder.status,
+                itemCount: activeOrder.itemCount,
+                eta: activeOrder.eta,
+                avatarUrl: activeOrder.avatarUrl,
+                progress: activeOrder.progress
+              }
+            ),
+            scheduledOrders.map((order, index) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              ScheduledOrder,
+              {
+                dateLabel: order.dateLabel,
+                mealName: order.mealName,
+                restaurant: order.restaurant,
+                avatarUrl: order.avatarUrl,
+                showBorder: index < scheduledOrders.length - 1
+              },
+              order.id
+            ))
+          ] }),
+          showExpandedList && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: styles10.viewRotationLink, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+            "button",
+            {
+              style: styles10.viewRotationText,
+              onClick: (e) => {
+                e.stopPropagation();
+                onViewRotation?.();
+              },
+              children: [
+                "View rotation \u2192",
+                " "
+              ]
+            }
+          ) })
+        ]
+      }
+    );
+  }
+);
+FloatingPanel.displayName = "FloatingPanel";
+
+// src/lib/ItemModal.tsx
+var import_react11 = require("react");
+var import_jsx_runtime11 = require("react/jsx-runtime");
+var styles11 = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1e3,
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+  },
+  modal: {
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "#FAF9F4",
+    borderRadius: 16,
+    border: "1px solid rgba(136, 103, 79, 0.1)",
+    boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px 0px rgba(0, 0, 0, 0.08), 0px 1px 1px 0px rgba(0, 0, 0, 0.07)",
+    maxWidth: 945,
+    width: "100%",
+    maxHeight: "90vh",
+    overflow: "hidden"
+  },
+  leftPanel: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 20,
+    padding: "16px 20px",
+    width: 358,
+    flexShrink: 0,
+    borderRight: "1px dashed rgba(136, 103, 79, 0.1)",
+    overflowY: "auto"
+  },
+  itemImage: {
+    width: "100%",
+    height: 269,
+    borderRadius: 12,
+    objectFit: "cover",
+    backgroundColor: "#EFEBE5"
+  },
+  itemDetails: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 16
+  },
+  itemInfo: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8
+  },
+  itemName: {
+    fontFamily: "'P22 Mackinac Pro', Georgia, serif",
+    fontSize: 20,
+    fontWeight: 500,
+    lineHeight: "1.1em",
+    letterSpacing: "-0.01em",
+    color: "#000000",
+    margin: 0
+  },
+  description: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "1.29em",
+    letterSpacing: "-0.0009em",
+    color: "#525252",
+    margin: 0
+  },
+  tagsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 8,
+    flexWrap: "wrap"
+  },
+  tag: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "4px 8px",
+    backgroundColor: "#EFEBE5",
+    borderRadius: 8,
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: "1.14em",
+    letterSpacing: "-0.04em",
+    color: "#1F1812"
+  },
+  nutritionSection: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  nutritionRow: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 8,
+    borderBottom: "1px solid rgba(136, 103, 79, 0.1)"
+  },
+  nutritionLabel: {
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: "1.14em",
+    letterSpacing: "-0.0009em",
+    color: "#433D36"
+  },
+  nutritionValue: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "1.14em",
+    letterSpacing: "-0.05em",
+    color: "#433D36"
+  },
+  rightPanel: {
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    position: "relative"
+  },
+  customizationsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    overflowY: "auto",
+    paddingBottom: 72
+  },
+  customizationGroup: {
+    display: "flex",
+    flexDirection: "column",
+    padding: "24px 20px"
+  },
+  customizationGroupFirst: {
+    display: "flex",
+    flexDirection: "column",
+    padding: "24px 20px 0 20px"
+  },
+  groupHeader: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 12,
+    marginBottom: 12
+  },
+  requiredBadge: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "8px 16px",
+    border: "1px solid rgba(136, 103, 79, 0.12)",
+    borderRadius: 20,
+    fontSize: 12,
+    fontWeight: 500,
+    lineHeight: "1.17em",
+    letterSpacing: "0.01em",
+    color: "#433D36"
+  },
+  closeButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    border: "1px solid #D6D6D6",
+    backgroundColor: "transparent",
+    cursor: "pointer",
+    transition: "background-color 0.15s ease"
+  },
+  groupContent: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8
+  },
+  groupTitle: {
+    fontFamily: "'P22 Mackinac Pro', Georgia, serif",
+    fontSize: 20,
+    fontWeight: 500,
+    lineHeight: "1.1em",
+    letterSpacing: "-0.01em",
+    color: "#1F1812",
+    margin: 0,
+    padding: "8px 0 16px 0"
+  },
+  optionRow: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "4px 8px",
+    gap: 8
+  },
+  optionLeft: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12
+  },
+  checkbox: {
+    width: 16,
+    height: 16,
+    borderRadius: 4,
+    border: "1.5px solid #433D36",
+    backgroundColor: "transparent",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0
+  },
+  checkboxSelected: {
+    width: 16,
+    height: 16,
+    borderRadius: 4,
+    border: "1.5px solid #141414",
+    backgroundColor: "#141414",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0
+  },
+  optionLabel: {
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: "1.14em",
+    letterSpacing: "-0.0009em",
+    color: "#433D36"
+  },
+  optionPrice: {
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: "1.14em",
+    letterSpacing: "-0.0009em",
+    color: "#525252"
+  },
+  optionDivider: {
+    height: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.08)",
+    margin: "0 8px"
+  },
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    gap: 24,
+    padding: "16px 24px",
+    backgroundColor: "#FAF9F4",
+    borderTop: "1px solid rgba(0, 0, 0, 0.08)"
+  },
+  secondaryButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    height: 40,
+    padding: "0 16px",
+    backgroundColor: "transparent",
+    border: "1px solid #D6D6D6",
+    borderRadius: 8,
+    cursor: "pointer",
+    fontSize: 16,
+    fontWeight: 500,
+    lineHeight: "1.125em",
+    letterSpacing: "-0.0018em",
+    color: "#141414",
+    transition: "background-color 0.15s ease",
+    flex: 1,
+    width: "100%"
+  },
+  primaryButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    height: 40,
+    padding: "0 16px",
+    backgroundColor: "#F74C25",
+    border: "none",
+    borderRadius: 8,
+    cursor: "pointer",
+    fontSize: 16,
+    fontWeight: 500,
+    lineHeight: "1.125em",
+    letterSpacing: "-0.0018em",
+    color: "#FFFFFF",
+    transition: "background-color 0.15s ease",
+    flex: 1
+  },
+  scheduleButtonWrapper: {
+    position: "relative",
+    flex: 1,
+    display: "flex"
+  },
+  datePickerPopover: {
+    position: "absolute",
+    bottom: "100%",
+    left: 0,
+    marginBottom: 8,
+    width: 272,
+    backgroundColor: "#FAF9F4",
+    borderRadius: 16,
+    border: "1px solid rgba(136, 103, 79, 0.1)",
+    boxShadow: "0px 4px 94px 34px rgba(0, 0, 0, 0.07)",
+    overflow: "hidden",
+    zIndex: 10
+  },
+  datePickerList: {
+    display: "flex",
+    flexDirection: "column",
+    padding: "8px 12px"
+  },
+  dateOption: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    padding: "16px 8px",
+    cursor: "pointer",
+    borderBottom: "1px solid rgba(136, 103, 79, 0.12)",
+    transition: "background-color 0.15s ease"
+  },
+  dateOptionLast: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    padding: "16px 8px",
+    cursor: "pointer",
+    transition: "background-color 0.15s ease"
+  },
+  dateCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: "50%",
+    border: "1px solid #CFC9C0",
+    backgroundColor: "transparent",
+    flexShrink: 0
+  },
+  dateCircleSelected: {
+    width: 24,
+    height: 24,
+    borderRadius: "50%",
+    border: "none",
+    backgroundColor: "#F74C25",
+    flexShrink: 0,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  dateLabel: {
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: "1.14em",
+    letterSpacing: "-0.0009em",
+    color: "#433D36"
+  },
+  confirmationPopover: {
+    position: "absolute",
+    bottom: "100%",
+    left: 0,
+    marginBottom: 8,
+    width: 354,
+    backgroundColor: "#FAF9F4",
+    borderRadius: 16,
+    border: "1px solid rgba(136, 103, 79, 0.1)",
+    boxShadow: "0px 4px 94px 34px rgba(0, 0, 0, 0.07)",
+    padding: 24,
+    zIndex: 15
+  },
+  confirmationTitle: {
+    fontSize: 16,
+    fontWeight: 500,
+    lineHeight: "1.125em",
+    letterSpacing: "-0.0018em",
+    color: "#000000",
+    margin: 0,
+    marginBottom: 16
+  },
+  confirmationDescription: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "1.14em",
+    letterSpacing: "-0.0009em",
+    color: "#606060",
+    margin: 0,
+    marginBottom: 24
+  },
+  confirmationButtons: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 12,
+    justifyContent: "flex-end"
+  },
+  confirmCancelButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 40,
+    padding: "0 16px",
+    backgroundColor: "transparent",
+    border: "1px solid #D6D6D6",
+    borderRadius: 8,
+    cursor: "pointer",
+    fontSize: 16,
+    fontWeight: 500,
+    lineHeight: "1.125em",
+    letterSpacing: "-0.0018em",
+    color: "#141414",
+    transition: "background-color 0.15s ease"
+  },
+  confirmScheduleButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 40,
+    padding: "0 16px",
+    backgroundColor: "#F74C25",
+    border: "none",
+    borderRadius: 8,
+    cursor: "pointer",
+    fontSize: 16,
+    fontWeight: 500,
+    lineHeight: "1.125em",
+    letterSpacing: "-0.0018em",
+    color: "#FFFFFF",
+    transition: "background-color 0.15s ease"
+  },
+  confirmationOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    borderRadius: 16,
+    zIndex: 5
+  }
+};
+var CloseIcon = () => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("svg", { width: "16", height: "16", viewBox: "0 0 16 16", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("path", { d: "M12 4L4 12M4 4L12 12", stroke: "#141414", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }) });
+var CheckIcon = () => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("svg", { width: "10", height: "8", viewBox: "0 0 10 8", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("path", { d: "M1 4L3.5 6.5L9 1", stroke: "#FFFFFF", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }) });
+var ChevronDownIcon2 = () => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("svg", { width: "16", height: "20", viewBox: "0 0 16 20", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("path", { d: "M4 8L8 12L12 8", stroke: "#141414", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }) });
+var CircleCheckIcon = () => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 12 12", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("path", { d: "M2 6L5 9L10 3", stroke: "#FFFFFF", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }) });
+var getUpcomingWeekdays = (count = 5) => {
+  const dates = [];
+  const today = /* @__PURE__ */ new Date();
+  let currentDate = new Date(today);
+  currentDate.setDate(currentDate.getDate() + 1);
+  while (dates.length < count) {
+    const dayOfWeek = currentDate.getDay();
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      dates.push(new Date(currentDate));
+    }
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  return dates;
+};
+var formatDateLabel = (date) => {
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
+};
+var formatDayName = (date) => {
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  return days[date.getDay()];
+};
+var formatShortDate = (date) => {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return `${months[date.getMonth()]}. ${date.getDate()}`;
+};
+var ItemModal = (0, import_react11.forwardRef)(
+  ({
+    isOpen,
+    imageUrl,
+    itemName,
+    description,
+    tags = [],
+    nutrition,
+    customizations = [],
+    basePrice,
+    currency = "$",
+    onClose,
+    onAddToBasket,
+    onScheduleMeal,
+    className,
+    style
+  }, ref) => {
+    const [selections, setSelections] = (0, import_react11.useState)({});
+    const [isDatePickerOpen, setIsDatePickerOpen] = (0, import_react11.useState)(false);
+    const [selectedDate, setSelectedDate] = (0, import_react11.useState)(null);
+    const [showConfirmation, setShowConfirmation] = (0, import_react11.useState)(false);
+    const upcomingDates = getUpcomingWeekdays(5);
+    (0, import_react11.useEffect)(() => {
+      if (isOpen) {
+        const originalOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        return () => {
+          document.body.style.overflow = originalOverflow;
+        };
+      }
+    }, [isOpen]);
+    (0, import_react11.useEffect)(() => {
+      if (!isOpen) {
+        setIsDatePickerOpen(false);
+        setSelectedDate(null);
+        setShowConfirmation(false);
+      }
+    }, [isOpen]);
+    if (!isOpen) return null;
+    const toggleOption = (groupId, optionId) => {
+      setSelections((prev) => {
+        const groupSelections = new Set(prev[groupId] || []);
+        if (groupSelections.has(optionId)) {
+          groupSelections.delete(optionId);
+        } else {
+          groupSelections.add(optionId);
+        }
+        return { ...prev, [groupId]: groupSelections };
+      });
+    };
+    const calculateTotalPrice = () => {
+      let total = basePrice;
+      customizations.forEach((group) => {
+        const groupSelections = selections[group.id] || /* @__PURE__ */ new Set();
+        group.options.forEach((option) => {
+          if (groupSelections.has(option.id) && option.price) {
+            total += option.price;
+          }
+        });
+      });
+      return total;
+    };
+    const handleAddToBasket = () => {
+      const selectedOptions = {};
+      Object.entries(selections).forEach(([groupId, optionSet]) => {
+        selectedOptions[groupId] = Array.from(optionSet);
+      });
+      onAddToBasket?.(selectedOptions, calculateTotalPrice());
+    };
+    const handleOverlayClick = (e) => {
+      if (e.target === e.currentTarget) {
+        onClose?.();
+      }
+    };
+    const totalPrice = calculateTotalPrice();
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      "div",
+      {
+        style: styles11.overlay,
+        onClick: handleOverlayClick,
+        "data-component": "item-modal-overlay",
+        children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+          "div",
+          {
+            ref,
+            className,
+            style: { ...styles11.modal, ...style },
+            "data-component": "item-modal",
+            children: [
+              showConfirmation && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                "div",
+                {
+                  style: styles11.confirmationOverlay,
+                  onClick: () => {
+                    setShowConfirmation(false);
+                    setSelectedDate(null);
+                  }
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.leftPanel, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.itemDetails, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                    "img",
+                    {
+                      src: imageUrl,
+                      alt: itemName,
+                      style: styles11.itemImage
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.itemInfo, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { style: styles11.itemName, children: itemName }),
+                    description && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { style: styles11.description, children: description }),
+                    tags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: styles11.tagsContainer, children: tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.tag, children: tag.label }, tag.id)) })
+                  ] })
+                ] }),
+                nutrition && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.nutritionSection, children: [
+                  nutrition.calories !== void 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.nutritionRow, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.nutritionLabel, children: "Calories" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.nutritionValue, children: nutrition.calories })
+                  ] }),
+                  nutrition.fat && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.nutritionRow, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.nutritionLabel, children: "Fat" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.nutritionValue, children: nutrition.fat })
+                  ] }),
+                  nutrition.carbs && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.nutritionRow, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.nutritionLabel, children: "Carbs" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.nutritionValue, children: nutrition.carbs })
+                  ] }),
+                  nutrition.protein && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.nutritionRow, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.nutritionLabel, children: "Protein" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.nutritionValue, children: nutrition.protein })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.rightPanel, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: styles11.customizationsContainer, children: customizations.map((group, groupIndex) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+                  "div",
+                  {
+                    style: groupIndex === 0 ? styles11.customizationGroupFirst : styles11.customizationGroup,
+                    children: [
+                      groupIndex === 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.groupHeader, children: [
+                        group.requiredCount && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: styles11.requiredBadge, children: [
+                          group.requiredCount,
+                          " required selection",
+                          group.requiredCount > 1 ? "s" : ""
+                        ] }),
+                        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                          "button",
+                          {
+                            style: styles11.closeButton,
+                            onClick: onClose,
+                            "aria-label": "Close modal",
+                            onMouseEnter: (e) => {
+                              e.currentTarget.style.backgroundColor = "#f5f5f5";
+                            },
+                            onMouseLeave: (e) => {
+                              e.currentTarget.style.backgroundColor = "transparent";
+                            },
+                            children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(CloseIcon, {})
+                          }
+                        )
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.groupContent, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: styles11.groupTitle, children: group.title }),
+                        group.options.map((option, optionIndex) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+                            "div",
+                            {
+                              style: styles11.optionRow,
+                              onClick: () => toggleOption(group.id, option.id),
+                              children: [
+                                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.optionLeft, children: [
+                                  /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                                    "div",
+                                    {
+                                      style: selections[group.id]?.has(option.id) ? styles11.checkboxSelected : styles11.checkbox,
+                                      children: selections[group.id]?.has(option.id) && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(CheckIcon, {})
+                                    }
+                                  ),
+                                  /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.optionLabel, children: option.label })
+                                ] }),
+                                option.price !== void 0 && option.price > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: styles11.optionPrice, children: [
+                                  "+ ",
+                                  currency,
+                                  option.price.toFixed(2)
+                                ] })
+                              ]
+                            }
+                          ),
+                          optionIndex < group.options.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: styles11.optionDivider })
+                        ] }, option.id))
+                      ] })
+                    ]
+                  },
+                  group.id
+                )) }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.footer, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.scheduleButtonWrapper, children: [
+                    isDatePickerOpen && !showConfirmation && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: styles11.datePickerPopover, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: styles11.datePickerList, children: upcomingDates.map((date, index) => {
+                      const isSelected = selectedDate?.getTime() === date.getTime();
+                      const isLast = index === upcomingDates.length - 1;
+                      return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+                        "div",
+                        {
+                          style: isLast ? styles11.dateOptionLast : styles11.dateOption,
+                          onClick: () => {
+                            setSelectedDate(date);
+                            setIsDatePickerOpen(false);
+                            setShowConfirmation(true);
+                          },
+                          onMouseEnter: (e) => {
+                            e.currentTarget.style.backgroundColor = "rgba(0, 0, 0, 0.04)";
+                          },
+                          onMouseLeave: (e) => {
+                            e.currentTarget.style.backgroundColor = "transparent";
+                          },
+                          children: [
+                            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: isSelected ? styles11.dateCircleSelected : styles11.dateCircle, children: isSelected && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(CircleCheckIcon, {}) }),
+                            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: styles11.dateLabel, children: formatDateLabel(date) })
+                          ]
+                        },
+                        date.toISOString()
+                      );
+                    }) }) }),
+                    showConfirmation && selectedDate && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.confirmationPopover, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("h3", { style: styles11.confirmationTitle, children: [
+                        "Scheduling for your ",
+                        formatDayName(selectedDate)
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { style: styles11.confirmationDescription, children: [
+                        "You'll be charged at 9:30am on ",
+                        formatShortDate(selectedDate),
+                        ".",
+                        "\n\n",
+                        "Cancel or order something else before then"
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: styles11.confirmationButtons, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                          "button",
+                          {
+                            style: styles11.confirmCancelButton,
+                            onClick: () => {
+                              setShowConfirmation(false);
+                              setSelectedDate(null);
+                            },
+                            onMouseEnter: (e) => {
+                              e.currentTarget.style.backgroundColor = "#f5f5f5";
+                            },
+                            onMouseLeave: (e) => {
+                              e.currentTarget.style.backgroundColor = "transparent";
+                            },
+                            children: "Cancel"
+                          }
+                        ),
+                        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                          "button",
+                          {
+                            style: styles11.confirmScheduleButton,
+                            onClick: () => {
+                              onScheduleMeal?.(selectedDate);
+                              setShowConfirmation(false);
+                            },
+                            onMouseEnter: (e) => {
+                              e.currentTarget.style.backgroundColor = "#e04420";
+                            },
+                            onMouseLeave: (e) => {
+                              e.currentTarget.style.backgroundColor = "#F74C25";
+                            },
+                            children: "Schedule order"
+                          }
+                        )
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+                      "button",
+                      {
+                        style: styles11.secondaryButton,
+                        onClick: () => {
+                          if (showConfirmation) {
+                            setShowConfirmation(false);
+                          }
+                          setIsDatePickerOpen(!isDatePickerOpen);
+                        },
+                        onMouseEnter: (e) => {
+                          e.currentTarget.style.backgroundColor = "#f5f5f5";
+                        },
+                        onMouseLeave: (e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                        },
+                        children: [
+                          "Schedule meal",
+                          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(ChevronDownIcon2, {})
+                        ]
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+                    "button",
+                    {
+                      style: styles11.primaryButton,
+                      onClick: handleAddToBasket,
+                      onMouseEnter: (e) => {
+                        e.currentTarget.style.backgroundColor = "#e04420";
+                      },
+                      onMouseLeave: (e) => {
+                        e.currentTarget.style.backgroundColor = "#F74C25";
+                      },
+                      children: [
+                        "Add to basket \xB7 ",
+                        currency,
+                        totalPrice.toFixed(2)
+                      ]
+                    }
+                  )
+                ] })
+              ] })
+            ]
+          }
+        )
+      }
+    );
+  }
+);
+ItemModal.displayName = "ItemModal";
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Banner,
   FilterChip,
   FilterChipCarousel,
+  FloatingPanel,
   Header,
   ITEM_CARD_BADGE_COLORS,
   ItemCard,
   ItemCarousel,
+  ItemModal,
+  ScheduledOrder,
   StoreCard,
   StoreCarousel
 });

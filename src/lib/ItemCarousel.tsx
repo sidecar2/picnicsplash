@@ -23,6 +23,8 @@ export interface ItemCarouselProps {
   favoritedIds?: Set<string | number>
   /** Whether to show navigation arrows (default: true) */
   showArrows?: boolean
+  /** Whether to show the add/favorite button on items (default: true) */
+  showFavoriteButton?: boolean
   /** Additional CSS class name */
   className?: string
   /** Additional inline styles */
@@ -128,6 +130,7 @@ export const ItemCarousel = forwardRef<HTMLDivElement, ItemCarouselProps>(
       onItemFavorite,
       favoritedIds = new Set(),
       showArrows = true,
+      showFavoriteButton = true,
       className,
       style,
     },
@@ -257,6 +260,7 @@ export const ItemCarousel = forwardRef<HTMLDivElement, ItemCarouselProps>(
                   badgeColor={item.badgeColor}
                   currency={item.currency}
                   isFavorited={favoritedIds.has(item.id)}
+                  showFavoriteButton={showFavoriteButton}
                   onFavorite={() => onItemFavorite?.(item)}
                   onClick={() => onItemClick?.(item)}
                   style={{ width: '100%' }}
