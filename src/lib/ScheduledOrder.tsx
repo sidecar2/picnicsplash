@@ -147,7 +147,7 @@ const styles: Record<string, CSSProperties> = {
     transition: 'width 0.3s ease',
   },
   highlighted: {
-    background: 'radial-gradient(circle at 47% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+    background: 'radial-gradient(circle at 47% 50%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
     transition: 'background 0.3s ease-out',
   },
   highlightFading: {
