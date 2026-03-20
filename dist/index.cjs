@@ -1990,6 +1990,20 @@ var styles9 = {
     height: "100%",
     backgroundColor: "#F74C25",
     transition: "width 0.3s ease"
+  },
+  highlighted: {
+    backgroundColor: "rgba(247, 76, 37, 0.25)",
+    borderRadius: 8,
+    margin: "-8px -8px 4px -8px",
+    padding: "8px 8px 8px 8px",
+    transition: "background-color 0.5s ease-out"
+  },
+  highlightFading: {
+    backgroundColor: "transparent",
+    borderRadius: 8,
+    margin: "-8px -8px 4px -8px",
+    padding: "8px 8px 8px 8px",
+    transition: "background-color 0.5s ease-out"
   }
 };
 var ScheduledOrder = (0, import_react9.forwardRef)(
@@ -2005,10 +2019,31 @@ var ScheduledOrder = (0, import_react9.forwardRef)(
     progress = 0,
     hideProgress = false,
     showBorder = false,
+    isHighlighted = false,
     className,
     style
   }, ref) => {
+    const [showHighlight, setShowHighlight] = (0, import_react9.useState)(false);
+    const [isFading, setIsFading] = (0, import_react9.useState)(false);
+    (0, import_react9.useEffect)(() => {
+      if (isHighlighted) {
+        setShowHighlight(true);
+        setIsFading(false);
+        const fadeTimer = setTimeout(() => {
+          setIsFading(true);
+        }, 1e3);
+        const removeTimer = setTimeout(() => {
+          setShowHighlight(false);
+          setIsFading(false);
+        }, 1500);
+        return () => {
+          clearTimeout(fadeTimer);
+          clearTimeout(removeTimer);
+        };
+      }
+    }, [isHighlighted]);
     const detailsText = isActive && itemCount && eta ? `${restaurant} \xB7 ${itemCount} item${itemCount !== 1 ? "s" : ""} \xB7 ETA ${eta}` : restaurant;
+    const highlightStyle = showHighlight ? isFading ? styles9.highlightFading : styles9.highlighted : {};
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
       "div",
       {
@@ -2017,6 +2052,7 @@ var ScheduledOrder = (0, import_react9.forwardRef)(
         style: {
           ...styles9.container,
           ...showBorder && !isActive ? styles9.containerWithBorder : {},
+          ...highlightStyle,
           ...style
         },
         "data-component": "scheduled-order",
@@ -2183,6 +2219,7 @@ var FloatingPanel = (0, import_react10.forwardRef)(
     onToggle,
     onClick,
     onViewRotation,
+    highlightedOrderId,
     className,
     style
   }, ref) => {
@@ -2277,7 +2314,8 @@ var FloatingPanel = (0, import_react10.forwardRef)(
                 mealName: order.mealName,
                 restaurant: order.restaurant,
                 avatarUrl: order.avatarUrl,
-                showBorder: index < scheduledOrders.length - 1
+                showBorder: index < scheduledOrders.length - 1,
+                isHighlighted: highlightedOrderId === order.id
               },
               order.id
             ))

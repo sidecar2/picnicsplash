@@ -176,6 +176,7 @@
 }
 
 .hero-carousel__tagline {
+  display: none; /* Hidden on all screens; restore by removing this line */
   font-family: 'P22 Mackinac Pro', serif;
   font-weight: 400;
   font-size: 24px;

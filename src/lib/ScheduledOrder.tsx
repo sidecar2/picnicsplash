@@ -1,4 +1,4 @@
-import { CSSProperties, forwardRef } from 'react'
+import { CSSProperties, forwardRef, useState, useEffect } from 'react'
 
 export interface ScheduledOrderProps {
   /** Whether this is an active/in-progress order */
@@ -23,6 +23,8 @@ export interface ScheduledOrderProps {
   hideProgress?: boolean
   /** Whether to show bottom border */
   showBorder?: boolean
+  /** Whether to highlight this item (for newly added orders) */
+  isHighlighted?: boolean
   /** Additional CSS class name */
   className?: string
   /** Additional inline styles */
@@ -144,6 +146,20 @@ const styles: Record<string, CSSProperties> = {
     backgroundColor: '#F74C25',
     transition: 'width 0.3s ease',
   },
+  highlighted: {
+    backgroundColor: 'rgba(247, 76, 37, 0.25)',
+    borderRadius: 8,
+    margin: '-8px -8px 4px -8px',
+    padding: '8px 8px 8px 8px',
+    transition: 'background-color 0.5s ease-out',
+  },
+  highlightFading: {
+    backgroundColor: 'transparent',
+    borderRadius: 8,
+    margin: '-8px -8px 4px -8px',
+    padding: '8px 8px 8px 8px',
+    transition: 'background-color 0.5s ease-out',
+  },
 }
 
 export const ScheduledOrder = forwardRef<HTMLDivElement, ScheduledOrderProps>(
@@ -160,14 +176,43 @@ export const ScheduledOrder = forwardRef<HTMLDivElement, ScheduledOrderProps>(
       progress = 0,
       hideProgress = false,
       showBorder = false,
+      isHighlighted = false,
       className,
       style,
     },
     ref
   ) => {
+    const [showHighlight, setShowHighlight] = useState(false)
+    const [isFading, setIsFading] = useState(false)
+
+    useEffect(() => {
+      if (isHighlighted) {
+        setShowHighlight(true)
+        setIsFading(false)
+        
+        const fadeTimer = setTimeout(() => {
+          setIsFading(true)
+        }, 1000)
+
+        const removeTimer = setTimeout(() => {
+          setShowHighlight(false)
+          setIsFading(false)
+        }, 1500)
+
+        return () => {
+          clearTimeout(fadeTimer)
+          clearTimeout(removeTimer)
+        }
+      }
+    }, [isHighlighted])
+
     const detailsText = isActive && itemCount && eta
       ? `${restaurant} · ${itemCount} item${itemCount !== 1 ? 's' : ''} · ETA ${eta}`
       : restaurant
+
+    const highlightStyle = showHighlight 
+      ? (isFading ? styles.highlightFading : styles.highlighted)
+      : {}
 
     return (
       <div
@@ -176,6 +221,7 @@ export const ScheduledOrder = forwardRef<HTMLDivElement, ScheduledOrderProps>(
         style={{
           ...styles.container,
           ...(showBorder && !isActive ? styles.containerWithBorder : {}),
+          ...highlightStyle,
           ...style,
         }}
         data-component="scheduled-order"

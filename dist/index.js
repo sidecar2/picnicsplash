@@ -1838,7 +1838,7 @@ var Banner = forwardRef8(
 Banner.displayName = "Banner";
 
 // src/lib/ScheduledOrder.tsx
-import { forwardRef as forwardRef9 } from "react";
+import { forwardRef as forwardRef9, useState as useState5, useEffect as useEffect5 } from "react";
 import { jsx as jsx9, jsxs as jsxs9 } from "react/jsx-runtime";
 var styles9 = {
   container: {
@@ -1954,6 +1954,20 @@ var styles9 = {
     height: "100%",
     backgroundColor: "#F74C25",
     transition: "width 0.3s ease"
+  },
+  highlighted: {
+    backgroundColor: "rgba(247, 76, 37, 0.25)",
+    borderRadius: 8,
+    margin: "-8px -8px 4px -8px",
+    padding: "8px 8px 8px 8px",
+    transition: "background-color 0.5s ease-out"
+  },
+  highlightFading: {
+    backgroundColor: "transparent",
+    borderRadius: 8,
+    margin: "-8px -8px 4px -8px",
+    padding: "8px 8px 8px 8px",
+    transition: "background-color 0.5s ease-out"
   }
 };
 var ScheduledOrder = forwardRef9(
@@ -1969,10 +1983,31 @@ var ScheduledOrder = forwardRef9(
     progress = 0,
     hideProgress = false,
     showBorder = false,
+    isHighlighted = false,
     className,
     style
   }, ref) => {
+    const [showHighlight, setShowHighlight] = useState5(false);
+    const [isFading, setIsFading] = useState5(false);
+    useEffect5(() => {
+      if (isHighlighted) {
+        setShowHighlight(true);
+        setIsFading(false);
+        const fadeTimer = setTimeout(() => {
+          setIsFading(true);
+        }, 1e3);
+        const removeTimer = setTimeout(() => {
+          setShowHighlight(false);
+          setIsFading(false);
+        }, 1500);
+        return () => {
+          clearTimeout(fadeTimer);
+          clearTimeout(removeTimer);
+        };
+      }
+    }, [isHighlighted]);
     const detailsText = isActive && itemCount && eta ? `${restaurant} \xB7 ${itemCount} item${itemCount !== 1 ? "s" : ""} \xB7 ETA ${eta}` : restaurant;
+    const highlightStyle = showHighlight ? isFading ? styles9.highlightFading : styles9.highlighted : {};
     return /* @__PURE__ */ jsxs9(
       "div",
       {
@@ -1981,6 +2016,7 @@ var ScheduledOrder = forwardRef9(
         style: {
           ...styles9.container,
           ...showBorder && !isActive ? styles9.containerWithBorder : {},
+          ...highlightStyle,
           ...style
         },
         "data-component": "scheduled-order",
@@ -2147,6 +2183,7 @@ var FloatingPanel = forwardRef10(
     onToggle,
     onClick,
     onViewRotation,
+    highlightedOrderId,
     className,
     style
   }, ref) => {
@@ -2241,7 +2278,8 @@ var FloatingPanel = forwardRef10(
                 mealName: order.mealName,
                 restaurant: order.restaurant,
                 avatarUrl: order.avatarUrl,
-                showBorder: index < scheduledOrders.length - 1
+                showBorder: index < scheduledOrders.length - 1,
+                isHighlighted: highlightedOrderId === order.id
               },
               order.id
             ))
@@ -2268,7 +2306,7 @@ var FloatingPanel = forwardRef10(
 FloatingPanel.displayName = "FloatingPanel";
 
 // src/lib/ItemModal.tsx
-import { forwardRef as forwardRef11, useState as useState5, useEffect as useEffect5 } from "react";
+import { forwardRef as forwardRef11, useState as useState6, useEffect as useEffect6 } from "react";
 import { jsx as jsx11, jsxs as jsxs11 } from "react/jsx-runtime";
 var styles11 = {
   overlay: {
@@ -2765,12 +2803,12 @@ var ItemModal = forwardRef11(
     className,
     style
   }, ref) => {
-    const [selections, setSelections] = useState5({});
-    const [isDatePickerOpen, setIsDatePickerOpen] = useState5(false);
-    const [selectedDate, setSelectedDate] = useState5(null);
-    const [showConfirmation, setShowConfirmation] = useState5(false);
+    const [selections, setSelections] = useState6({});
+    const [isDatePickerOpen, setIsDatePickerOpen] = useState6(false);
+    const [selectedDate, setSelectedDate] = useState6(null);
+    const [showConfirmation, setShowConfirmation] = useState6(false);
     const upcomingDates = getUpcomingWeekdays(5);
-    useEffect5(() => {
+    useEffect6(() => {
       if (isOpen) {
         const originalOverflow = document.body.style.overflow;
         document.body.style.overflow = "hidden";
@@ -2779,7 +2817,7 @@ var ItemModal = forwardRef11(
         };
       }
     }, [isOpen]);
-    useEffect5(() => {
+    useEffect6(() => {
       if (!isOpen) {
         setIsDatePickerOpen(false);
         setSelectedDate(null);

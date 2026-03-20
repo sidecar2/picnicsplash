@@ -21,6 +21,7 @@ function App() {
   const [isPanelExpanded, setIsPanelExpanded] = useState(false)
   const [selectedItem, setSelectedItem] = useState<ItemCarouselItem | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [highlightedOrderId, setHighlightedOrderId] = useState<number | null>(null)
   const [scheduledOrders, setScheduledOrders] = useState<ScheduledOrderItem[]>([
     { id: 1, dateLabel: 'Weds, 3/19', mealName: 'Impossible Taco Salad', restaurant: 'Mendocino Farms', avatarUrl: '/images/items/Mendocino-Farms--Impossible-Taco-Salad.png' },
     { id: 2, dateLabel: 'Thurs, 3/20', mealName: 'Harvest Bowl', restaurant: 'Sweetgreen', avatarUrl: '/images/items/Sweetgreen--Harvest-Bowl.png' },
@@ -37,8 +38,9 @@ function App() {
   }
 
   const handleScheduleOrder = (date: Date, item: ItemCarouselItem) => {
+    const newOrderId = Date.now()
     const newOrder: ScheduledOrderItem = {
-      id: Date.now(),
+      id: newOrderId,
       dateLabel: formatDateLabel(date),
       mealName: item.dishName,
       restaurant: item.restaurantName,
@@ -48,6 +50,12 @@ function App() {
       // Sort by date (simple string comparison works for same format)
       return a.dateLabel.localeCompare(b.dateLabel)
     }))
+    setHighlightedOrderId(newOrderId)
+    
+    // Clear highlight after animation completes
+    setTimeout(() => {
+      setHighlightedOrderId(null)
+    }, 2000)
     setIsPanelExpanded(true)
     handleCloseModal()
   }
@@ -563,6 +571,7 @@ function App() {
             avatarUrl: '/images/items/Cava--Harissa-Chicken-Bowl.png',
           }}
           scheduledOrders={scheduledOrders}
+          highlightedOrderId={highlightedOrderId}
           onToggle={() => setIsPanelExpanded(!isPanelExpanded)}
           onViewRotation={() => console.log('View rotation')}
         />

@@ -244,6 +244,8 @@ interface ScheduledOrderProps {
     hideProgress?: boolean;
     /** Whether to show bottom border */
     showBorder?: boolean;
+    /** Whether to highlight this item (for newly added orders) */
+    isHighlighted?: boolean;
     /** Additional CSS class name */
     className?: string;
     /** Additional inline styles */
@@ -292,6 +294,8 @@ interface FloatingPanelProps {
     onClick?: () => void;
     /** Callback when "View rotation" is clicked */
     onViewRotation?: () => void;
+    /** ID of an order to highlight (for newly added items) */
+    highlightedOrderId?: string | number | null;
     /** Additional CSS class name */
     className?: string;
     /** Additional inline styles */
