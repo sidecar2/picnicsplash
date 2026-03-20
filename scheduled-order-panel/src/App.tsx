@@ -17,15 +17,36 @@ const formatDateLabel = (date: Date): string => {
   return `${days[date.getDay()]}, ${date.getMonth() + 1}/${date.getDate()}`
 }
 
+// Parse dateLabel back to timestamp for sorting (assumes current year)
+const parseDateLabel = (dateLabel: string): number => {
+  const match = dateLabel.match(/(\d+)\/(\d+)/)
+  if (match) {
+    const month = parseInt(match[1], 10) - 1
+    const day = parseInt(match[2], 10)
+    const year = new Date().getFullYear()
+    return new Date(year, month, day).getTime()
+  }
+  return 0
+}
+
+interface OrderWithTimestamp extends ScheduledOrderItem {
+  sortTimestamp: number
+}
+
 function App() {
   const [isPanelExpanded, setIsPanelExpanded] = useState(false)
   const [selectedItem, setSelectedItem] = useState<ItemCarouselItem | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [highlightedOrderId, setHighlightedOrderId] = useState<number | null>(null)
-  const [scheduledOrders, setScheduledOrders] = useState<ScheduledOrderItem[]>([
-    { id: 1, dateLabel: 'Weds, 3/19', mealName: 'Impossible Taco Salad', restaurant: 'Mendocino Farms', avatarUrl: '/images/items/Mendocino-Farms--Impossible-Taco-Salad.png' },
-    { id: 2, dateLabel: 'Thurs, 3/20', mealName: 'Harvest Bowl', restaurant: 'Sweetgreen', avatarUrl: '/images/items/Sweetgreen--Harvest-Bowl.png' },
+  const [ordersWithTimestamp, setOrdersWithTimestamp] = useState<OrderWithTimestamp[]>([
+    { id: 1, dateLabel: 'Weds, 3/19', mealName: 'Impossible Taco Salad', restaurant: 'Mendocino Farms', avatarUrl: '/images/items/Mendocino-Farms--Impossible-Taco-Salad.png', sortTimestamp: parseDateLabel('Weds, 3/19') },
+    { id: 2, dateLabel: 'Thurs, 3/20', mealName: 'Harvest Bowl', restaurant: 'Sweetgreen', avatarUrl: '/images/items/Sweetgreen--Harvest-Bowl.png', sortTimestamp: parseDateLabel('Thurs, 3/20') },
   ])
+
+  // Sorted orders for display (strip sortTimestamp for component)
+  const scheduledOrders: ScheduledOrderItem[] = [...ordersWithTimestamp]
+    .sort((a, b) => a.sortTimestamp - b.sortTimestamp)
+    .map(({ sortTimestamp, ...order }) => order)
 
   const handleItemClick = (item: ItemCarouselItem) => {
     setSelectedItem(item)
@@ -39,17 +60,15 @@ function App() {
 
   const handleScheduleOrder = (date: Date, item: ItemCarouselItem) => {
     const newOrderId = Date.now()
-    const newOrder: ScheduledOrderItem = {
+    const newOrder: OrderWithTimestamp = {
       id: newOrderId,
       dateLabel: formatDateLabel(date),
       mealName: item.dishName,
       restaurant: item.restaurantName,
       avatarUrl: item.imageUrl,
+      sortTimestamp: date.getTime(),
     }
-    setScheduledOrders((prev) => [...prev, newOrder].sort((a, b) => {
-      // Sort by date (simple string comparison works for same format)
-      return a.dateLabel.localeCompare(b.dateLabel)
-    }))
+    setOrdersWithTimestamp((prev) => [...prev, newOrder])
     setHighlightedOrderId(newOrderId)
     
     // Clear highlight after animation completes
