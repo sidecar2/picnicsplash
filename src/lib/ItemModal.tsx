@@ -435,22 +435,23 @@ const styles: Record<string, CSSProperties> = {
     zIndex: 15,
   },
   confirmationTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 500,
-    lineHeight: '1.125em',
-    letterSpacing: '-0.0018em',
-    color: '#000000',
+    lineHeight: '1.11em',
+    letterSpacing: '-0.0026em',
+    color: '#1F1812',
     margin: 0,
     marginBottom: 16,
   },
   confirmationDescription: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 400,
-    lineHeight: '1.14em',
-    letterSpacing: '-0.0009em',
+    lineHeight: '1.125em',
+    letterSpacing: '-0.0018em',
     color: '#606060',
     margin: 0,
     marginBottom: 24,
+    whiteSpace: 'pre-line',
   },
   confirmationButtons: {
     display: 'flex',
@@ -837,7 +838,7 @@ export const ItemModal = forwardRef<HTMLDivElement, ItemModalProps>(
                       Scheduling for your {formatDayName(selectedDate)}
                     </h3>
                     <p style={styles.confirmationDescription}>
-                      You'll be charged at 9:30am on {formatShortDate(selectedDate)}.
+                      You'll be charged (or discounted from your meal program) {formatShortDate(selectedDate)}, at 9:10am
                       {'\n\n'}
                       Cancel or order something else before then
                     </p>

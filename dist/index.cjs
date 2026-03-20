@@ -2684,22 +2684,23 @@ var styles11 = {
     zIndex: 15
   },
   confirmationTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 500,
-    lineHeight: "1.125em",
-    letterSpacing: "-0.0018em",
-    color: "#000000",
+    lineHeight: "1.11em",
+    letterSpacing: "-0.0026em",
+    color: "#1F1812",
     margin: 0,
     marginBottom: 16
   },
   confirmationDescription: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 400,
-    lineHeight: "1.14em",
-    letterSpacing: "-0.0009em",
+    lineHeight: "1.125em",
+    letterSpacing: "-0.0018em",
     color: "#606060",
     margin: 0,
-    marginBottom: 24
+    marginBottom: 24,
+    whiteSpace: "pre-line"
   },
   confirmationButtons: {
     display: "flex",
@@ -3013,9 +3014,9 @@ var ItemModal = (0, import_react11.forwardRef)(
                         formatDayName(selectedDate)
                       ] }),
                       /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { style: styles11.confirmationDescription, children: [
-                        "You'll be charged at 9:30am on ",
+                        "You'll be charged (or discounted from your meal program) ",
                         formatShortDate(selectedDate),
-                        ".",
+                        ", at 9:10am",
                         "\n\n",
                         "Cancel or order something else before then"
                       ] }),
