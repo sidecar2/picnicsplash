@@ -147,18 +147,12 @@ const styles: Record<string, CSSProperties> = {
     transition: 'width 0.3s ease',
   },
   highlighted: {
-    backgroundColor: 'rgba(247, 76, 37, 0.25)',
-    borderRadius: 8,
-    margin: '-8px -8px 4px -8px',
-    padding: '8px 8px 8px 8px',
-    transition: 'background-color 0.5s ease-out',
+    background: 'radial-gradient(circle at 47% 50%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 100%)',
+    transition: 'opacity 0.5s ease-out',
   },
   highlightFading: {
-    backgroundColor: 'transparent',
-    borderRadius: 8,
-    margin: '-8px -8px 4px -8px',
-    padding: '8px 8px 8px 8px',
-    transition: 'background-color 0.5s ease-out',
+    background: 'radial-gradient(circle at 47% 50%, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%)',
+    transition: 'background 0.5s ease-out',
   },
 }
 
