@@ -74,7 +74,7 @@ function App() {
     // Clear highlight after animation completes
     setTimeout(() => {
       setHighlightedOrderId(null)
-    }, 2000)
+    }, 1000)
     setIsPanelExpanded(true)
     handleCloseModal()
   }

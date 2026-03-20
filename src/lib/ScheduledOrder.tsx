@@ -148,11 +148,11 @@ const styles: Record<string, CSSProperties> = {
   },
   highlighted: {
     background: 'radial-gradient(circle at 47% 50%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 100%)',
-    transition: 'opacity 0.5s ease-out',
+    transition: 'background 0.3s ease-out',
   },
   highlightFading: {
     background: 'radial-gradient(circle at 47% 50%, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%)',
-    transition: 'background 0.5s ease-out',
+    transition: 'background 0.3s ease-out',
   },
 }
 
@@ -186,12 +186,12 @@ export const ScheduledOrder = forwardRef<HTMLDivElement, ScheduledOrderProps>(
         
         const fadeTimer = setTimeout(() => {
           setIsFading(true)
-        }, 1000)
+        }, 400)
 
         const removeTimer = setTimeout(() => {
           setShowHighlight(false)
           setIsFading(false)
-        }, 1500)
+        }, 700)
 
         return () => {
           clearTimeout(fadeTimer)
