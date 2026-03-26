@@ -30,3 +30,12 @@ export type { FloatingPanelProps, ActiveOrderData, ScheduledOrderItem } from './
 
 export { ItemModal } from './ItemModal'
 export type { ItemModalProps, NutritionInfo, Tag, CustomizationOption, CustomizationGroup } from './ItemModal'
+
+export { DayCard } from './DayCard'
+export type { DayCardProps, MealData } from './DayCard'
+
+export { WeekSelector } from './WeekSelector'
+export type { WeekSelectorProps, WeekOption } from './WeekSelector'
+
+export { RotationHeader } from './RotationHeader'
+export type { RotationHeaderProps } from './RotationHeader'

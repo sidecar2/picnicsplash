@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Header,
   Banner,
@@ -34,6 +35,7 @@ interface OrderWithTimestamp extends ScheduledOrderItem {
 }
 
 function App() {
+  const navigate = useNavigate()
   const [isPanelExpanded, setIsPanelExpanded] = useState(false)
   const [selectedItem, setSelectedItem] = useState<ItemCarouselItem | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -592,7 +594,7 @@ function App() {
           scheduledOrders={scheduledOrders}
           highlightedOrderId={highlightedOrderId}
           onToggle={() => setIsPanelExpanded(!isPanelExpanded)}
-          onViewRotation={() => console.log('View rotation')}
+          onViewRotation={() => navigate('/rotation')}
         />
       </div>
 

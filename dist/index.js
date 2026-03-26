@@ -1292,7 +1292,7 @@ FilterChipCarousel.displayName = "FilterChipCarousel";
 
 // src/lib/Header.tsx
 import { forwardRef as forwardRef7, useState as useState4, useEffect as useEffect4, useRef as useRef4 } from "react";
-import { jsx as jsx7, jsxs as jsxs7 } from "react/jsx-runtime";
+import { Fragment, jsx as jsx7, jsxs as jsxs7 } from "react/jsx-runtime";
 var styles7 = {
   headerWrapper: {
     display: "flex",
@@ -1483,6 +1483,7 @@ var DefaultLogo = () => /* @__PURE__ */ jsxs7("svg", { width: "87", height: "28"
 ] });
 var Header = forwardRef7(
   ({
+    variant = "default",
     logoUrl,
     locationName = "Location",
     orderTiming = "Today, Lunch",
@@ -1498,7 +1499,9 @@ var Header = forwardRef7(
     const [isStacked, setIsStacked] = useState4(false);
     const centerRef = useRef4(null);
     const rightRef = useRef4(null);
+    const isSimple = variant === "simple";
     useEffect4(() => {
+      if (isSimple) return;
       const checkOverlap = () => {
         if (centerRef.current && rightRef.current) {
           const centerRect = centerRef.current.getBoundingClientRect();
@@ -1510,7 +1513,7 @@ var Header = forwardRef7(
       checkOverlap();
       window.addEventListener("resize", checkOverlap);
       return () => window.removeEventListener("resize", checkOverlap);
-    }, [locationName, orderTiming, countdownText]);
+    }, [locationName, orderTiming, countdownText, isSimple]);
     return /* @__PURE__ */ jsxs7(
       "div",
       {
@@ -1521,7 +1524,7 @@ var Header = forwardRef7(
         children: [
           /* @__PURE__ */ jsxs7("header", { style: styles7.header, "data-header-row": "primary", children: [
             /* @__PURE__ */ jsx7("div", { style: styles7.leftSection, children: /* @__PURE__ */ jsx7("div", { style: styles7.logo, onClick: onLogoClick, children: logoUrl ? /* @__PURE__ */ jsx7("img", { src: logoUrl, alt: "Logo", style: { height: "100%" } }) : /* @__PURE__ */ jsx7(DefaultLogo, {}) }) }),
-            /* @__PURE__ */ jsxs7(
+            !isSimple && /* @__PURE__ */ jsxs7(
               "div",
               {
                 ref: centerRef,
@@ -1555,37 +1558,39 @@ var Header = forwardRef7(
               }
             ),
             /* @__PURE__ */ jsxs7("div", { ref: rightRef, style: styles7.rightSection, children: [
-              /* @__PURE__ */ jsx7(
-                "button",
-                {
-                  style: styles7.iconButton,
-                  "aria-label": "Search",
-                  onMouseEnter: (e) => {
-                    e.currentTarget.style.backgroundColor = "rgba(0, 0, 0, 0.05)";
-                  },
-                  onMouseLeave: (e) => {
-                    e.currentTarget.style.backgroundColor = "transparent";
-                  },
-                  children: /* @__PURE__ */ jsx7(SearchIcon, {})
-                }
-              ),
-              /* @__PURE__ */ jsxs7(
-                "button",
-                {
-                  style: styles7.teamOrderButton,
-                  onClick: onTeamOrderClick,
-                  onMouseEnter: (e) => {
-                    e.currentTarget.style.backgroundColor = "rgba(0, 0, 0, 0.05)";
-                  },
-                  onMouseLeave: (e) => {
-                    e.currentTarget.style.backgroundColor = "transparent";
-                  },
-                  children: [
-                    /* @__PURE__ */ jsx7(GroupIcon, {}),
-                    /* @__PURE__ */ jsx7("span", { style: { ...styles7.buttonLabel, ...styles7.teamOrderLabel }, children: "Team order" })
-                  ]
-                }
-              ),
+              !isSimple && /* @__PURE__ */ jsxs7(Fragment, { children: [
+                /* @__PURE__ */ jsx7(
+                  "button",
+                  {
+                    style: styles7.iconButton,
+                    "aria-label": "Search",
+                    onMouseEnter: (e) => {
+                      e.currentTarget.style.backgroundColor = "rgba(0, 0, 0, 0.05)";
+                    },
+                    onMouseLeave: (e) => {
+                      e.currentTarget.style.backgroundColor = "transparent";
+                    },
+                    children: /* @__PURE__ */ jsx7(SearchIcon, {})
+                  }
+                ),
+                /* @__PURE__ */ jsxs7(
+                  "button",
+                  {
+                    style: styles7.teamOrderButton,
+                    onClick: onTeamOrderClick,
+                    onMouseEnter: (e) => {
+                      e.currentTarget.style.backgroundColor = "rgba(0, 0, 0, 0.05)";
+                    },
+                    onMouseLeave: (e) => {
+                      e.currentTarget.style.backgroundColor = "transparent";
+                    },
+                    children: [
+                      /* @__PURE__ */ jsx7(GroupIcon, {}),
+                      /* @__PURE__ */ jsx7("span", { style: { ...styles7.buttonLabel, ...styles7.teamOrderLabel }, children: "Team order" })
+                    ]
+                  }
+                )
+              ] }),
               /* @__PURE__ */ jsxs7(
                 "button",
                 {
@@ -1605,7 +1610,7 @@ var Header = forwardRef7(
               )
             ] })
           ] }),
-          /* @__PURE__ */ jsxs7(
+          !isSimple && /* @__PURE__ */ jsxs7(
             "div",
             {
               style: {
@@ -2036,7 +2041,7 @@ ScheduledOrder.displayName = "ScheduledOrder";
 
 // src/lib/FloatingPanel.tsx
 import { forwardRef as forwardRef10 } from "react";
-import { Fragment, jsx as jsx10, jsxs as jsxs10 } from "react/jsx-runtime";
+import { Fragment as Fragment2, jsx as jsx10, jsxs as jsxs10 } from "react/jsx-runtime";
 var styles10 = {
   panel: {
     display: "flex",
@@ -2071,7 +2076,7 @@ var styles10 = {
   },
   headerText: {
     fontSize: 18,
-    fontWeight: 400,
+    fontWeight: 500,
     lineHeight: "20px",
     letterSpacing: "-0.05em",
     color: "#EFEBE5",
@@ -2231,7 +2236,7 @@ var FloatingPanel = forwardRef10(
               ]
             }
           ),
-          showCollapsedActive && activeOrder && /* @__PURE__ */ jsxs10(Fragment, { children: [
+          showCollapsedActive && activeOrder && /* @__PURE__ */ jsxs10(Fragment2, { children: [
             /* @__PURE__ */ jsx10("div", { style: styles10.collapsedActiveSection, children: /* @__PURE__ */ jsx10(
               ScheduledOrder,
               {
@@ -3104,8 +3109,531 @@ var ItemModal = forwardRef11(
   }
 );
 ItemModal.displayName = "ItemModal";
+
+// src/lib/DayCard.tsx
+import { forwardRef as forwardRef12 } from "react";
+import { Fragment as Fragment3, jsx as jsx12, jsxs as jsxs12 } from "react/jsx-runtime";
+var styles12 = {
+  card: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    gap: 16,
+    padding: 16,
+    backgroundColor: "#FFFFFC",
+    borderRadius: 8,
+    border: "1px solid rgba(136, 103, 79, 0.12)",
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    flex: 1,
+    minWidth: 200,
+    height: 280,
+    boxSizing: "border-box"
+  },
+  topContent: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 16,
+    flex: 1
+  },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start"
+  },
+  dateContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4
+  },
+  dayText: {
+    fontSize: 18,
+    fontWeight: 530,
+    lineHeight: "20px",
+    letterSpacing: "-0.05em",
+    color: "#433D36",
+    margin: 0
+  },
+  dateText: {
+    fontSize: 18,
+    fontWeight: 500,
+    lineHeight: "20px",
+    letterSpacing: "-0.05em",
+    color: "#433D36",
+    margin: 0
+  },
+  editText: {
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "#3D3D3D",
+    margin: 0,
+    cursor: "pointer",
+    background: "none",
+    border: "none",
+    padding: 0,
+    fontFamily: "inherit"
+  },
+  imageContainer: {
+    width: "100%",
+    height: 112,
+    borderRadius: 8,
+    overflow: "hidden",
+    backgroundColor: "#F0F0F0"
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover"
+  },
+  dataContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4
+  },
+  brandRow: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4
+  },
+  brandLogo: {
+    width: 20,
+    height: 20,
+    borderRadius: "50%",
+    objectFit: "cover",
+    backgroundColor: "#E0E0E0"
+  },
+  brandName: {
+    fontSize: 12,
+    fontWeight: 400,
+    lineHeight: "14px",
+    letterSpacing: "0.01em",
+    color: "#606060",
+    margin: 0
+  },
+  dishName: {
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "#3D3D3D",
+    margin: 0
+  },
+  description: {
+    fontSize: 12,
+    fontWeight: 400,
+    lineHeight: "14px",
+    letterSpacing: "0.01em",
+    color: "#606060",
+    margin: 0
+  },
+  price: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "#433D36",
+    margin: 0
+  },
+  messageContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 4,
+    paddingTop: 12
+  },
+  stipendBadge: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+    borderRadius: 4
+  },
+  stipendIcon: {
+    width: 16,
+    height: 16
+  },
+  stipendText: {
+    fontSize: 12,
+    fontWeight: 500,
+    lineHeight: "14px",
+    letterSpacing: "0.01em",
+    color: "#2A7E3D",
+    margin: 0
+  },
+  emptyState: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 4,
+    flex: 1
+  },
+  addMealButton: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 4,
+    background: "none",
+    border: "none",
+    padding: 0,
+    cursor: "pointer",
+    fontFamily: "inherit"
+  },
+  addIcon: {
+    width: 24,
+    height: 24
+  },
+  addMealText: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "#433D36",
+    margin: 0
+  }
+};
+var TicketIcon = () => /* @__PURE__ */ jsx12("svg", { width: "16", height: "16", viewBox: "0 0 16 16", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx12(
+  "path",
+  {
+    d: "M13.3333 6.66667V4.66667C13.3333 4.3 13.0333 4 12.6667 4H3.33333C2.96667 4 2.66667 4.3 2.66667 4.66667V6.66667C3.4 6.66667 4 7.26667 4 8C4 8.73333 3.4 9.33333 2.66667 9.33333V11.3333C2.66667 11.7 2.96667 12 3.33333 12H12.6667C13.0333 12 13.3333 11.7 13.3333 11.3333V9.33333C12.6 9.33333 12 8.73333 12 8C12 7.26667 12.6 6.66667 13.3333 6.66667ZM12 5.33333V6.06667C11.2867 6.42 10.78 7.14667 10.78 8C10.78 8.85333 11.2867 9.58 12 9.93333V10.6667H4V9.93333C4.71333 9.58 5.22 8.85333 5.22 8C5.22 7.14 4.72 6.42 4 6.06V5.33333H12Z",
+    fill: "#2A7E3D"
+  }
+) });
+var AddIcon = () => /* @__PURE__ */ jsx12("svg", { width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx12(
+  "path",
+  {
+    d: "M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z",
+    fill: "#433D36"
+  }
+) });
+var DayCard = forwardRef12(
+  ({
+    day,
+    date,
+    hasMeal = false,
+    meal,
+    stipendAmount,
+    isActive = false,
+    onEdit,
+    onAddMeal,
+    onClick,
+    className,
+    style
+  }, ref) => {
+    const formatPrice = (price) => {
+      return `$${price.toFixed(2)}`;
+    };
+    const formatStipend = (amount) => {
+      return `$${amount.toFixed(2)} Stipend`;
+    };
+    return /* @__PURE__ */ jsxs12(
+      "div",
+      {
+        ref,
+        className,
+        style: {
+          ...styles12.card,
+          ...style
+        },
+        onClick,
+        "data-component": "day-card",
+        children: [
+          /* @__PURE__ */ jsxs12("div", { style: styles12.header, children: [
+            /* @__PURE__ */ jsxs12("div", { style: styles12.dateContainer, children: [
+              /* @__PURE__ */ jsx12("span", { style: styles12.dayText, children: day }),
+              /* @__PURE__ */ jsx12("span", { style: styles12.dateText, children: date })
+            ] }),
+            hasMeal && meal && /* @__PURE__ */ jsx12(
+              "button",
+              {
+                style: styles12.editText,
+                onClick: (e) => {
+                  e.stopPropagation();
+                  onEdit?.();
+                },
+                children: "Edit"
+              }
+            )
+          ] }),
+          hasMeal && meal ? /* @__PURE__ */ jsxs12(Fragment3, { children: [
+            /* @__PURE__ */ jsxs12("div", { style: styles12.topContent, children: [
+              meal.imageUrl && /* @__PURE__ */ jsx12("div", { style: styles12.imageContainer, children: /* @__PURE__ */ jsx12("img", { src: meal.imageUrl, alt: meal.dishName, style: styles12.image }) }),
+              /* @__PURE__ */ jsxs12("div", { style: styles12.dataContainer, children: [
+                /* @__PURE__ */ jsxs12("div", { style: styles12.brandRow, children: [
+                  meal.restaurantLogo && /* @__PURE__ */ jsx12("img", { src: meal.restaurantLogo, alt: "", style: styles12.brandLogo }),
+                  /* @__PURE__ */ jsx12("span", { style: styles12.brandName, children: meal.restaurantName })
+                ] }),
+                /* @__PURE__ */ jsx12("span", { style: styles12.dishName, children: meal.dishName }),
+                meal.description && /* @__PURE__ */ jsx12("span", { style: styles12.description, children: meal.description }),
+                /* @__PURE__ */ jsx12("span", { style: styles12.price, children: formatPrice(meal.price) })
+              ] })
+            ] }),
+            stipendAmount && stipendAmount > 0 && /* @__PURE__ */ jsx12("div", { style: styles12.messageContainer, children: /* @__PURE__ */ jsxs12("div", { style: styles12.stipendBadge, children: [
+              /* @__PURE__ */ jsx12(TicketIcon, {}),
+              /* @__PURE__ */ jsx12("span", { style: styles12.stipendText, children: formatStipend(stipendAmount) })
+            ] }) })
+          ] }) : (
+            /* Empty state - Add meal */
+            /* @__PURE__ */ jsx12("div", { style: styles12.emptyState, children: /* @__PURE__ */ jsxs12(
+              "button",
+              {
+                style: styles12.addMealButton,
+                onClick: (e) => {
+                  e.stopPropagation();
+                  onAddMeal?.();
+                },
+                children: [
+                  /* @__PURE__ */ jsx12(AddIcon, {}),
+                  /* @__PURE__ */ jsx12("span", { style: styles12.addMealText, children: "Add meal" })
+                ]
+              }
+            ) })
+          )
+        ]
+      }
+    );
+  }
+);
+DayCard.displayName = "DayCard";
+
+// src/lib/WeekSelector.tsx
+import { forwardRef as forwardRef13 } from "react";
+import { jsx as jsx13 } from "react/jsx-runtime";
+var styles13 = {
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 12,
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+  },
+  pill: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 4,
+    padding: "12px 24px",
+    borderRadius: 28,
+    border: "1px solid #CFC9C0",
+    backgroundColor: "transparent",
+    cursor: "pointer",
+    transition: "all 0.15s ease"
+  },
+  pillActive: {
+    backgroundColor: "#292929",
+    border: "1px solid rgba(247, 76, 37, 0.2)"
+  },
+  pillText: {
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: "16px",
+    letterSpacing: "-0.05em",
+    color: "#1F1812",
+    margin: 0
+  },
+  pillTextActive: {
+    color: "#FAF7F0"
+  }
+};
+var WeekSelector = forwardRef13(
+  ({
+    weeks,
+    selectedWeekId,
+    onSelectWeek,
+    className,
+    style
+  }, ref) => {
+    return /* @__PURE__ */ jsx13(
+      "div",
+      {
+        ref,
+        className,
+        style: {
+          ...styles13.container,
+          ...style
+        },
+        "data-component": "week-selector",
+        children: weeks.map((week) => {
+          const isActive = week.id === selectedWeekId;
+          return /* @__PURE__ */ jsx13(
+            "button",
+            {
+              style: {
+                ...styles13.pill,
+                ...isActive ? styles13.pillActive : {}
+              },
+              onClick: () => onSelectWeek?.(week),
+              children: /* @__PURE__ */ jsx13(
+                "span",
+                {
+                  style: {
+                    ...styles13.pillText,
+                    ...isActive ? styles13.pillTextActive : {}
+                  },
+                  children: week.label
+                }
+              )
+            },
+            week.id
+          );
+        })
+      }
+    );
+  }
+);
+WeekSelector.displayName = "WeekSelector";
+
+// src/lib/RotationHeader.tsx
+import { forwardRef as forwardRef14 } from "react";
+import { jsx as jsx14, jsxs as jsxs13 } from "react/jsx-runtime";
+var styles14 = {
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-end",
+    gap: 4,
+    width: "100%",
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+  },
+  left: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+    flex: 1
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 500,
+    lineHeight: "30px",
+    letterSpacing: "-0.006em",
+    color: "#1F1812",
+    margin: 0,
+    fontFamily: "'P22 Mackinac Pro', Georgia, serif"
+  },
+  subtitle: {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: "16px",
+    letterSpacing: "-0.0009em",
+    color: "#433D36",
+    margin: 0
+  },
+  actions: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8
+  },
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
+    padding: "0 16px",
+    height: 40,
+    backgroundColor: "transparent",
+    border: "1px solid #CFC9C0",
+    borderRadius: 8,
+    cursor: "pointer",
+    transition: "all 0.15s ease",
+    fontFamily: "inherit"
+  },
+  buttonIcon: {
+    width: 16,
+    height: 20,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  buttonLabel: {
+    fontSize: 16,
+    fontWeight: 500,
+    lineHeight: "18px",
+    letterSpacing: "-0.0018em",
+    color: "#141414",
+    margin: 0
+  }
+};
+var ShuffleIcon = () => /* @__PURE__ */ jsx14("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx14(
+  "path",
+  {
+    d: "M5.83333 15.8333H3.33333V14.1667H5.83333C7.21667 14.1667 8.475 13.4583 9.16667 12.3333L9.975 13.1417C9.05833 14.5833 7.525 15.8333 5.83333 15.8333ZM14.1667 15.8333V14.1667H15.4917L13.825 12.5L15 11.325L16.6667 12.9917V11.6667H18.3333V15.8333H14.1667ZM3.33333 5.83333V4.16667H5.83333C7.525 4.16667 9.05833 5.41667 9.975 6.85833L13.825 10.7083L15.4917 9.04167H14.1667V5.83333H18.3333V10H16.6667V8.675L15 10.3417L12.0083 7.35C12.6917 6.225 13.95 5.83333 15.3333 5.83333H16.6583L15 4.16667L14.1667 5V4.16667H18.3333V5.83333H16.6667V5L15 6.66667H5.83333C4.44167 6.66667 3.33333 5.83333 3.33333 5.83333Z",
+    fill: "#141414"
+  }
+) });
+var MealsIcon = () => /* @__PURE__ */ jsx14("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx14(
+  "path",
+  {
+    d: "M15.8333 3.33333V8.33333C15.8333 9.25 15.0833 10 14.1667 10H12.5V16.6667H10.8333V10H9.16667C8.25 10 7.5 9.25 7.5 8.33333V3.33333H9.16667V7.5H10V3.33333H11.6667V7.5H12.5V3.33333H14.1667V7.5H15V3.33333H15.8333ZM5.83333 3.33333V10H7.5V16.6667H5.83333V10H4.16667V3.33333H5.83333Z",
+    fill: "#141414"
+  }
+) });
+var DaysIcon = () => /* @__PURE__ */ jsx14("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx14(
+  "path",
+  {
+    d: "M15.8333 3.33333H15V2.5H13.3333V3.33333H6.66667V2.5H5V3.33333H4.16667C3.25 3.33333 2.5 4.08333 2.5 5V15.8333C2.5 16.75 3.25 17.5 4.16667 17.5H15.8333C16.75 17.5 17.5 16.75 17.5 15.8333V5C17.5 4.08333 16.75 3.33333 15.8333 3.33333ZM15.8333 15.8333H4.16667V8.33333H15.8333V15.8333ZM15.8333 6.66667H4.16667V5H15.8333V6.66667Z",
+    fill: "#141414"
+  }
+) });
+var PauseIcon = () => /* @__PURE__ */ jsx14("svg", { width: "20", height: "20", viewBox: "0 0 20 20", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ jsx14(
+  "path",
+  {
+    d: "M10 1.66667C5.4 1.66667 1.66667 5.4 1.66667 10C1.66667 14.6 5.4 18.3333 10 18.3333C14.6 18.3333 18.3333 14.6 18.3333 10C18.3333 5.4 14.6 1.66667 10 1.66667ZM10 16.6667C6.31667 16.6667 3.33333 13.6833 3.33333 10C3.33333 6.31667 6.31667 3.33333 10 3.33333C13.6833 3.33333 16.6667 6.31667 16.6667 10C16.6667 13.6833 13.6833 16.6667 10 16.6667ZM8.33333 6.66667H6.66667V13.3333H8.33333V6.66667ZM13.3333 6.66667H11.6667V13.3333H13.3333V6.66667Z",
+    fill: "#141414"
+  }
+) });
+var ActionButton = ({ icon, label, onClick }) => /* @__PURE__ */ jsxs13("button", { style: styles14.button, onClick, children: [
+  /* @__PURE__ */ jsx14("span", { style: styles14.buttonIcon, children: icon }),
+  /* @__PURE__ */ jsx14("span", { style: styles14.buttonLabel, children: label })
+] });
+var RotationHeader = forwardRef14(
+  ({
+    title,
+    subtitle,
+    showActions = true,
+    onShuffle,
+    onMeals,
+    onDays,
+    onPause,
+    className,
+    style
+  }, ref) => {
+    return /* @__PURE__ */ jsxs13(
+      "div",
+      {
+        ref,
+        className,
+        style: {
+          ...styles14.container,
+          ...style
+        },
+        "data-component": "rotation-header",
+        children: [
+          /* @__PURE__ */ jsxs13("div", { style: styles14.left, children: [
+            /* @__PURE__ */ jsx14("h1", { style: styles14.title, children: title }),
+            subtitle && /* @__PURE__ */ jsx14("span", { style: styles14.subtitle, children: subtitle })
+          ] }),
+          showActions && /* @__PURE__ */ jsxs13("div", { style: styles14.actions, children: [
+            /* @__PURE__ */ jsx14(ActionButton, { icon: /* @__PURE__ */ jsx14(ShuffleIcon, {}), label: "Shuffle", onClick: onShuffle }),
+            /* @__PURE__ */ jsx14(ActionButton, { icon: /* @__PURE__ */ jsx14(MealsIcon, {}), label: "Meals", onClick: onMeals }),
+            /* @__PURE__ */ jsx14(ActionButton, { icon: /* @__PURE__ */ jsx14(DaysIcon, {}), label: "Days", onClick: onDays }),
+            /* @__PURE__ */ jsx14(ActionButton, { icon: /* @__PURE__ */ jsx14(PauseIcon, {}), label: "Pause", onClick: onPause })
+          ] })
+        ]
+      }
+    );
+  }
+);
+RotationHeader.displayName = "RotationHeader";
 export {
   Banner,
+  DayCard,
   FilterChip,
   FilterChipCarousel,
   FloatingPanel,
@@ -3114,8 +3642,10 @@ export {
   ItemCard,
   ItemCarousel,
   ItemModal,
+  RotationHeader,
   ScheduledOrder,
   StoreCard,
-  StoreCarousel
+  StoreCarousel,
+  WeekSelector
 };
 //# sourceMappingURL=index.js.map

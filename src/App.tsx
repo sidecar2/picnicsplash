@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { ItemCard, StoreCard, ItemCarousel, StoreCarousel, FilterChip, FilterChipCarousel, Header, Banner, FloatingPanel, ItemModal } from './lib'
-import type { ItemCarouselItem, StoreCarouselItem, FilterChipItem, CustomizationGroup, Tag, NutritionInfo } from './lib'
+import { useNavigate } from 'react-router-dom'
+import { ItemCard, StoreCard, ItemCarousel, StoreCarousel, FilterChip, FilterChipCarousel, Header, Banner, FloatingPanel, ItemModal, DayCard, WeekSelector, RotationHeader } from './lib'
+import type { ItemCarouselItem, StoreCarouselItem, FilterChipItem, CustomizationGroup, Tag, NutritionInfo, WeekOption, MealData } from './lib'
 import './App.css'
 
 function App() {
+  const navigate = useNavigate()
   const [favorites, setFavorites] = useState<Set<number>>(new Set())
   const [activeFilter, setActiveFilter] = useState<string | number | null>('price')
   const [isPanelExpanded, setIsPanelExpanded] = useState(true)
   const [isItemModalOpen, setIsItemModalOpen] = useState(false)
+  const [selectedWeek, setSelectedWeek] = useState<string | number>('week1')
 
   const toggleFavorite = (id: number) => {
     setFavorites((prev) => {
@@ -239,6 +242,65 @@ function App() {
     { id: 'banner', label: 'Banner' },
     { id: 'header', label: 'Header' },
     { id: 'floating-panel', label: 'FloatingPanel' },
+    { id: 'rotation', label: 'Rotation' },
+  ]
+
+  const weekOptions: WeekOption[] = [
+    { id: 'week1', label: 'April 21-25' },
+    { id: 'week2', label: 'April 28-May 2' },
+  ]
+
+  const rotationMeals: { day: string; date: string; hasMeal: boolean; meal?: MealData; stipend?: number }[] = [
+    {
+      day: 'Mon',
+      date: '4/21',
+      hasMeal: true,
+      meal: {
+        restaurantName: 'Sweetfin',
+        restaurantLogo: '/images/logos/Sweetfin.png',
+        dishName: 'Classic Tuna Poke Bowl',
+        description: 'Yellowfin Tuna • Miso Sesame • Bamboo Rice',
+        price: 13.25,
+        imageUrl: '/images/items/Sweetfin--Classic-Tuna-Poke-Bowl.png',
+      },
+      stipend: 15.00,
+    },
+    {
+      day: 'Tue',
+      date: '4/22',
+      hasMeal: false,
+    },
+    {
+      day: 'Wed',
+      date: '4/23',
+      hasMeal: true,
+      meal: {
+        restaurantName: 'Vesti Sandwiches',
+        restaurantLogo: '/images/logos/Vesti.png',
+        dishName: 'Turkey Ciabatta',
+        price: 16.00,
+        imageUrl: '/images/items/Vesti--Turkey-Ciabatta.png',
+      },
+      stipend: 15.00,
+    },
+    {
+      day: 'Thu',
+      date: '4/24',
+      hasMeal: true,
+      meal: {
+        restaurantName: 'Sweetgreen',
+        restaurantLogo: '/images/logos/Sweetgreen.png',
+        dishName: 'Kale Caesar',
+        description: 'Romaine • Add bread',
+        price: 13.95,
+        imageUrl: '/images/items/Sweetgreen--Harvest-Bowl.png',
+      },
+    },
+    {
+      day: 'Fri',
+      date: '4/25',
+      hasMeal: false,
+    },
   ]
 
   return (
@@ -531,7 +593,7 @@ function App() {
       {/* FloatingPanel Section */}
       <div className="section" id="floating-panel">
         <h2>FloatingPanel</h2>
-        <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', justifyContent: 'center', alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', justifyContent: 'center', alignItems: 'flex-start', marginLeft: 60 }}>
           {/* Collapsed, No Active Order */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
             <span style={{ fontSize: 12, color: '#666' }}>Collapsed</span>
@@ -570,7 +632,7 @@ function App() {
                 { id: 3, dateLabel: 'Fri, 3/19', mealName: 'Harvest Bowl', restaurant: 'Sweetgreen', avatarUrl: '/images/items/Sweetgreen--Harvest-Bowl.png' },
               ]}
               onToggle={() => {}}
-              onViewRotation={() => console.log('View rotation clicked')}
+              onViewRotation={() => navigate('/rotation')}
             />
           </div>
           {/* Expanded, With Active Order - Interactive */}
@@ -592,7 +654,7 @@ function App() {
                 { id: 2, dateLabel: 'Thurs, 3/18', mealName: 'Harvest Bowl', restaurant: 'Sweetgreen', avatarUrl: '/images/items/Sweetgreen--Harvest-Bowl.png' },
               ]}
               onToggle={() => setIsPanelExpanded(!isPanelExpanded)}
-              onViewRotation={() => console.log('View rotation clicked')}
+              onViewRotation={() => navigate('/rotation')}
             />
           </div>
         </div>
@@ -725,6 +787,89 @@ function App() {
           </pre>
           <p className="props-caption">
             Props: <code>isOpen</code> <code>imageUrl</code> <code>itemName</code> <code>description</code> <code>tags</code> <code>nutrition</code> <code>customizations</code> <code>basePrice</code> <code>onClose</code> <code>onAddToBasket</code> <code>onScheduleMeal</code>
+          </p>
+        </div>
+      </div>
+
+      {/* Rotation Section */}
+      <div className="section" id="rotation" style={{ backgroundColor: '#F7F7F2', padding: 32, borderRadius: 12, marginLeft: 60 }}>
+        <h2>Rotation Page Components</h2>
+        
+        {/* Full Rotation Layout */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1216 }}>
+          <RotationHeader
+            title="Weekly rotation"
+            subtitle="Change or skip an order by 10:30am"
+            onShuffle={() => console.log('Shuffle clicked')}
+            onMeals={() => console.log('Meals clicked')}
+            onDays={() => console.log('Days clicked')}
+            onPause={() => console.log('Pause clicked')}
+          />
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <WeekSelector
+              weeks={weekOptions}
+              selectedWeekId={selectedWeek}
+              onSelectWeek={(week) => setSelectedWeek(week.id)}
+            />
+            
+            <div style={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+              {rotationMeals.map((item) => (
+                <DayCard
+                  key={item.date}
+                  day={item.day}
+                  date={item.date}
+                  hasMeal={item.hasMeal}
+                  meal={item.meal}
+                  stipendAmount={item.stipend}
+                  onEdit={() => console.log(`Edit ${item.day} clicked`)}
+                  onAddMeal={() => console.log(`Add meal for ${item.day} clicked`)}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="usage" style={{ marginTop: 32 }}>
+          <h3>Usage</h3>
+          <pre>
+            <code>{`// RotationHeader
+<RotationHeader
+  title="Weekly rotation"
+  subtitle="Change or skip an order by 10:30am"
+  onShuffle={() => {}}
+  onMeals={() => {}}
+  onDays={() => {}}
+  onPause={() => {}}
+/>
+
+// WeekSelector
+<WeekSelector
+  weeks={[
+    { id: 'week1', label: 'April 21-25' },
+    { id: 'week2', label: 'April 28-May 2' },
+  ]}
+  selectedWeekId="week1"
+  onSelectWeek={(week) => {}}
+/>
+
+// DayCard
+<DayCard
+  day="Mon"
+  date="4/21"
+  hasMeal={true}
+  meal={{
+    restaurantName: 'Sweetfin',
+    dishName: 'Classic Tuna Poke Bowl',
+    price: 13.25,
+    imageUrl: '/images/...'
+  }}
+  stipendAmount={15.00}
+  onEdit={() => {}}
+/>`}</code>
+          </pre>
+          <p className="props-caption">
+            Components: <code>RotationHeader</code> <code>WeekSelector</code> <code>DayCard</code>
           </p>
         </div>
       </div>

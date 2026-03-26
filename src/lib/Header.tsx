@@ -1,6 +1,8 @@
 import { CSSProperties, forwardRef, useState, useEffect, useRef } from 'react'
 
 export interface HeaderProps {
+  /** Header variant: 'default' shows all elements, 'simple' shows only logo and basket */
+  variant?: 'default' | 'simple'
   /** Logo image URL or element */
   logoUrl?: string
   /** Location/office name */
@@ -235,6 +237,7 @@ const DefaultLogo = () => (
 export const Header = forwardRef<HTMLDivElement, HeaderProps>(
   (
     {
+      variant = 'default',
       logoUrl,
       locationName = 'Location',
       orderTiming = 'Today, Lunch',
@@ -252,8 +255,11 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
     const [isStacked, setIsStacked] = useState(false)
     const centerRef = useRef<HTMLDivElement>(null)
     const rightRef = useRef<HTMLDivElement>(null)
+    const isSimple = variant === 'simple'
 
     useEffect(() => {
+      if (isSimple) return // Skip overlap detection for simple variant
+      
       const checkOverlap = () => {
         if (centerRef.current && rightRef.current) {
           const centerRect = centerRef.current.getBoundingClientRect()
@@ -267,7 +273,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
       checkOverlap()
       window.addEventListener('resize', checkOverlap)
       return () => window.removeEventListener('resize', checkOverlap)
-    }, [locationName, orderTiming, countdownText])
+    }, [locationName, orderTiming, countdownText, isSimple])
 
     return (
       <div
@@ -289,63 +295,69 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
             </div>
           </div>
 
-          {/* Center Section - Location & Timer (hidden when stacked) */}
-          <div 
-            ref={centerRef}
-            style={{ 
-              ...styles.centerSection,
-              visibility: isStacked ? 'hidden' : 'visible',
-            }} 
-            data-header-center>
-            <button
-              style={styles.locationButton}
-              onClick={onLocationClick}
-            >
-              <LocationIcon />
-              <span style={styles.locationText}>
-                {locationName} · {orderTiming}
-              </span>
-              <ChevronDownIcon />
-            </button>
-            
-            {countdownText && (
-              <div style={styles.statusBadge}>
-                <ClockIcon />
-                <span style={styles.statusText}>{countdownText}</span>
-              </div>
-            )}
-          </div>
+          {/* Center Section - Location & Timer (hidden when stacked or simple variant) */}
+          {!isSimple && (
+            <div 
+              ref={centerRef}
+              style={{ 
+                ...styles.centerSection,
+                visibility: isStacked ? 'hidden' : 'visible',
+              }} 
+              data-header-center>
+              <button
+                style={styles.locationButton}
+                onClick={onLocationClick}
+              >
+                <LocationIcon />
+                <span style={styles.locationText}>
+                  {locationName} · {orderTiming}
+                </span>
+                <ChevronDownIcon />
+              </button>
+              
+              {countdownText && (
+                <div style={styles.statusBadge}>
+                  <ClockIcon />
+                  <span style={styles.statusText}>{countdownText}</span>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Right Section - Actions */}
           <div ref={rightRef} style={styles.rightSection}>
-            <button
-              style={styles.iconButton}
-              aria-label="Search"
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.05)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent'
-              }}
-            >
-              <SearchIcon />
-            </button>
-            
-            <button
-              style={styles.teamOrderButton}
-              onClick={onTeamOrderClick}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.05)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent'
-              }}
-            >
-              <GroupIcon />
-              <span style={{ ...styles.buttonLabel, ...styles.teamOrderLabel }}>
-                Team order
-              </span>
-            </button>
+            {!isSimple && (
+              <>
+                <button
+                  style={styles.iconButton}
+                  aria-label="Search"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.05)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
+                >
+                  <SearchIcon />
+                </button>
+                
+                <button
+                  style={styles.teamOrderButton}
+                  onClick={onTeamOrderClick}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.05)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
+                >
+                  <GroupIcon />
+                  <span style={{ ...styles.buttonLabel, ...styles.teamOrderLabel }}>
+                    Team order
+                  </span>
+                </button>
+              </>
+            )}
             
             <button
               style={styles.basketButton}
@@ -365,32 +377,34 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
           </div>
         </header>
 
-        {/* Secondary Row - Location info (visible when stacked) */}
-        <div 
-          style={{ 
-            ...styles.secondaryRow,
-            display: isStacked ? 'flex' : 'none',
-          }} 
-          data-header-row="secondary"
-        >
-          <button
-            style={styles.locationButton}
-            onClick={onLocationClick}
+        {/* Secondary Row - Location info (visible when stacked, hidden for simple variant) */}
+        {!isSimple && (
+          <div 
+            style={{ 
+              ...styles.secondaryRow,
+              display: isStacked ? 'flex' : 'none',
+            }} 
+            data-header-row="secondary"
           >
-            <LocationIcon />
-            <span style={styles.locationText}>
-              {locationName} · {orderTiming}
-            </span>
-            <ChevronDownIcon />
-          </button>
-          
-          {countdownText && (
-            <div style={styles.statusBadge}>
-              <ClockIcon />
-              <span style={styles.statusText}>{countdownText}</span>
-            </div>
-          )}
-        </div>
+            <button
+              style={styles.locationButton}
+              onClick={onLocationClick}
+            >
+              <LocationIcon />
+              <span style={styles.locationText}>
+                {locationName} · {orderTiming}
+              </span>
+              <ChevronDownIcon />
+            </button>
+            
+            {countdownText && (
+              <div style={styles.statusBadge}>
+                <ClockIcon />
+                <span style={styles.statusText}>{countdownText}</span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     )
   }

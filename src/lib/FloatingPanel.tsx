@@ -87,7 +87,7 @@ const styles: Record<string, CSSProperties> = {
   },
   headerText: {
     fontSize: 18,
-    fontWeight: 400,
+    fontWeight: 500,
     lineHeight: '20px',
     letterSpacing: '-0.05em',
     color: '#EFEBE5',

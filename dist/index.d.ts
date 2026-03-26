@@ -165,6 +165,8 @@ interface FilterChipCarouselProps {
 declare const FilterChipCarousel: react.ForwardRefExoticComponent<FilterChipCarouselProps & react.RefAttributes<HTMLDivElement>>;
 
 interface HeaderProps {
+    /** Header variant: 'default' shows all elements, 'simple' shows only logo and basket */
+    variant?: 'default' | 'simple';
     /** Logo image URL or element */
     logoUrl?: string;
     /** Location/office name */
@@ -357,4 +359,86 @@ interface ItemModalProps {
 }
 declare const ItemModal: react.ForwardRefExoticComponent<ItemModalProps & react.RefAttributes<HTMLDivElement>>;
 
-export { type ActiveOrderData, Banner, type BannerProps, type BannerTheme, type CustomizationGroup, type CustomizationOption, FilterChip, FilterChipCarousel, type FilterChipCarouselProps, type FilterChipItem, type FilterChipProps, FloatingPanel, type FloatingPanelProps, Header, type HeaderProps, ITEM_CARD_BADGE_COLORS, ItemCard, type ItemCardProps, ItemCarousel, type ItemCarouselItem, type ItemCarouselProps, ItemModal, type ItemModalProps, type NutritionInfo, ScheduledOrder, type ScheduledOrderItem, type ScheduledOrderProps, StoreCard, type StoreCardProps, StoreCarousel, type StoreCarouselItem, type StoreCarouselProps, type Tag };
+interface MealData {
+    /** Restaurant/brand name */
+    restaurantName: string;
+    /** Restaurant logo URL */
+    restaurantLogo?: string;
+    /** Dish name */
+    dishName: string;
+    /** Optional description/ingredients */
+    description?: string;
+    /** Price */
+    price: number;
+    /** Food image URL */
+    imageUrl?: string;
+}
+interface DayCardProps {
+    /** Day abbreviation (e.g., "Mon", "Tue") */
+    day: string;
+    /** Date string (e.g., "4/21") */
+    date: string;
+    /** Whether this day has a meal scheduled */
+    hasMeal?: boolean;
+    /** Meal data (required if hasMeal is true) */
+    meal?: MealData;
+    /** Stipend amount (e.g., 15.00) - shows stipend banner if provided */
+    stipendAmount?: number;
+    /** Whether this is the active/today card */
+    isActive?: boolean;
+    /** Callback when Edit is clicked */
+    onEdit?: () => void;
+    /** Callback when Add meal is clicked */
+    onAddMeal?: () => void;
+    /** Callback when card is clicked */
+    onClick?: () => void;
+    /** Additional CSS class name */
+    className?: string;
+    /** Additional inline styles */
+    style?: CSSProperties;
+}
+declare const DayCard: react.ForwardRefExoticComponent<DayCardProps & react.RefAttributes<HTMLDivElement>>;
+
+interface WeekOption {
+    /** Unique identifier */
+    id: string | number;
+    /** Display label (e.g., "April 21-25") */
+    label: string;
+}
+interface WeekSelectorProps {
+    /** List of week options */
+    weeks: WeekOption[];
+    /** Currently selected week ID */
+    selectedWeekId?: string | number;
+    /** Callback when a week is selected */
+    onSelectWeek?: (week: WeekOption) => void;
+    /** Additional CSS class name */
+    className?: string;
+    /** Additional inline styles */
+    style?: CSSProperties;
+}
+declare const WeekSelector: react.ForwardRefExoticComponent<WeekSelectorProps & react.RefAttributes<HTMLDivElement>>;
+
+interface RotationHeaderProps {
+    /** Main title */
+    title: string;
+    /** Subtitle text */
+    subtitle?: string;
+    /** Whether to show action buttons */
+    showActions?: boolean;
+    /** Callback when Shuffle is clicked */
+    onShuffle?: () => void;
+    /** Callback when Meals is clicked */
+    onMeals?: () => void;
+    /** Callback when Days is clicked */
+    onDays?: () => void;
+    /** Callback when Pause is clicked */
+    onPause?: () => void;
+    /** Additional CSS class name */
+    className?: string;
+    /** Additional inline styles */
+    style?: CSSProperties;
+}
+declare const RotationHeader: react.ForwardRefExoticComponent<RotationHeaderProps & react.RefAttributes<HTMLDivElement>>;
+
+export { type ActiveOrderData, Banner, type BannerProps, type BannerTheme, type CustomizationGroup, type CustomizationOption, DayCard, type DayCardProps, FilterChip, FilterChipCarousel, type FilterChipCarouselProps, type FilterChipItem, type FilterChipProps, FloatingPanel, type FloatingPanelProps, Header, type HeaderProps, ITEM_CARD_BADGE_COLORS, ItemCard, type ItemCardProps, ItemCarousel, type ItemCarouselItem, type ItemCarouselProps, ItemModal, type ItemModalProps, type MealData, type NutritionInfo, RotationHeader, type RotationHeaderProps, ScheduledOrder, type ScheduledOrderItem, type ScheduledOrderProps, StoreCard, type StoreCardProps, StoreCarousel, type StoreCarouselItem, type StoreCarouselProps, type Tag, type WeekOption, WeekSelector, type WeekSelectorProps };
