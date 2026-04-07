@@ -8,7 +8,7 @@
 .main-content {
   flex: 1;
   padding: 24px 100px;
-  padding-bottom: 180px;
+  padding-bottom: 200px;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -46,15 +46,15 @@
 
 .floating-panel-container {
   position: fixed;
-  bottom: 0;
-  right: 100px;
+  bottom: 16px;
+  right: 16px;
   z-index: 1000;
 }
 
 @media (max-width: 1200px) {
   .main-content {
     padding: 24px 48px;
-    padding-bottom: 180px;
+    padding-bottom: 200px;
   }
   
   .stores-grid {
@@ -71,6 +71,6 @@
 @media (max-width: 768px) {
   .main-content {
     padding: 16px 24px;
-    padding-bottom: 180px;
+    padding-bottom: 200px;
   }
 }
