@@ -47,6 +47,8 @@ export interface FloatingPanelProps {
   onViewRotation?: () => void
   /** ID of an order to highlight (for newly added items) */
   highlightedOrderId?: string | number | null
+  /** Callback when a scheduled order row is clicked */
+  onScheduledOrderClick?: (order: ScheduledOrderItem) => void
   /** Additional CSS class name */
   className?: string
   /** Additional inline styles */
@@ -205,6 +207,7 @@ export const FloatingPanel = forwardRef<HTMLDivElement, FloatingPanelProps>(
       onClick,
       onViewRotation,
       highlightedOrderId,
+      onScheduledOrderClick,
       className,
       style,
     },
@@ -306,6 +309,7 @@ export const FloatingPanel = forwardRef<HTMLDivElement, FloatingPanelProps>(
                 avatarUrl={order.avatarUrl}
                 showBorder={index < scheduledOrders.length - 1}
                 isHighlighted={highlightedOrderId === order.id}
+                onClick={() => onScheduledOrderClick?.(order)}
               />
             ))}
           </div>

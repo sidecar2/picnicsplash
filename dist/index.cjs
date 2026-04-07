@@ -2026,7 +2026,8 @@ var ScheduledOrder = (0, import_react9.forwardRef)(
     showBorder = false,
     isHighlighted = false,
     className,
-    style
+    style,
+    onClick
   }, ref) => {
     const [showHighlight, setShowHighlight] = (0, import_react9.useState)(false);
     const [isFading, setIsFading] = (0, import_react9.useState)(false);
@@ -2054,10 +2055,12 @@ var ScheduledOrder = (0, import_react9.forwardRef)(
       {
         ref,
         className,
+        onClick,
         style: {
           ...styles9.container,
           ...showBorder && !isActive ? styles9.containerWithBorder : {},
           ...highlightStyle,
+          ...onClick ? { cursor: "pointer" } : {},
           ...style
         },
         "data-component": "scheduled-order",
@@ -2227,6 +2230,7 @@ var FloatingPanel = (0, import_react10.forwardRef)(
     onClick,
     onViewRotation,
     highlightedOrderId,
+    onScheduledOrderClick,
     className,
     style
   }, ref) => {
@@ -2322,7 +2326,8 @@ var FloatingPanel = (0, import_react10.forwardRef)(
                 restaurant: order.restaurant,
                 avatarUrl: order.avatarUrl,
                 showBorder: index < scheduledOrders.length - 1,
-                isHighlighted: highlightedOrderId === order.id
+                isHighlighted: highlightedOrderId === order.id,
+                onClick: () => onScheduledOrderClick?.(order)
               },
               order.id
             ))

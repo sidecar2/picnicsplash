@@ -252,6 +252,8 @@ interface ScheduledOrderProps {
     className?: string;
     /** Additional inline styles */
     style?: CSSProperties;
+    /** Callback when the order row is clicked */
+    onClick?: () => void;
 }
 declare const ScheduledOrder: react.ForwardRefExoticComponent<ScheduledOrderProps & react.RefAttributes<HTMLDivElement>>;
 
@@ -298,6 +300,8 @@ interface FloatingPanelProps {
     onViewRotation?: () => void;
     /** ID of an order to highlight (for newly added items) */
     highlightedOrderId?: string | number | null;
+    /** Callback when a scheduled order row is clicked */
+    onScheduledOrderClick?: (order: ScheduledOrderItem) => void;
     /** Additional CSS class name */
     className?: string;
     /** Additional inline styles */

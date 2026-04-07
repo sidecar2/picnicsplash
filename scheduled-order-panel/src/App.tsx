@@ -12,6 +12,7 @@ import {
 } from 'picnic-eater-components'
 import type { FilterChipItem, ItemCarouselItem, StoreCarouselItem, CustomizationGroup, ScheduledOrderItem } from 'picnic-eater-components'
 import './App.css'
+import { ScheduledMealPreviewModal } from './components/ScheduledMealPreviewModal'
 
 const formatDateLabel = (date: Date): string => {
   const days = ['Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat']
@@ -39,6 +40,8 @@ function App() {
   const [isPanelExpanded, setIsPanelExpanded] = useState(false)
   const [selectedItem, setSelectedItem] = useState<ItemCarouselItem | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isScheduledMealModalOpen, setIsScheduledMealModalOpen] = useState(false)
+  const [selectedScheduledOrder, setSelectedScheduledOrder] = useState<ScheduledOrderItem | null>(null)
   const [highlightedOrderId, setHighlightedOrderId] = useState<number | null>(null)
   const [ordersWithTimestamp, setOrdersWithTimestamp] = useState<OrderWithTimestamp[]>([
     { id: 1, dateLabel: 'Weds, 3/19', mealName: 'Impossible Taco Salad', restaurant: 'Mendocino Farms', avatarUrl: '/images/items/Mendocino-Farms--Impossible-Taco-Salad.png', sortTimestamp: parseDateLabel('Weds, 3/19') },
@@ -58,6 +61,11 @@ function App() {
   const handleCloseModal = () => {
     setIsModalOpen(false)
     setSelectedItem(null)
+  }
+
+  const handleScheduledOrderClick = (order: ScheduledOrderItem) => {
+    setSelectedScheduledOrder(order)
+    setIsScheduledMealModalOpen(true)
   }
 
   const handleScheduleOrder = (date: Date, item: ItemCarouselItem) => {
@@ -595,8 +603,26 @@ function App() {
           highlightedOrderId={highlightedOrderId}
           onToggle={() => setIsPanelExpanded(!isPanelExpanded)}
           onViewRotation={() => navigate('/rotation')}
+          onScheduledOrderClick={handleScheduledOrderClick}
         />
       </div>
+
+      <ScheduledMealPreviewModal
+        isOpen={isScheduledMealModalOpen}
+        order={selectedScheduledOrder}
+        onClose={() => {
+          setIsScheduledMealModalOpen(false)
+          setSelectedScheduledOrder(null)
+        }}
+        onSkipMeal={() => {
+          setIsScheduledMealModalOpen(false)
+          setSelectedScheduledOrder(null)
+        }}
+        onSave={() => {
+          setIsScheduledMealModalOpen(false)
+          setSelectedScheduledOrder(null)
+        }}
+      />
 
       {/* Item Modal */}
       {selectedItem && (

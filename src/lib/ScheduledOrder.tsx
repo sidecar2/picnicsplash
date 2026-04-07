@@ -29,6 +29,8 @@ export interface ScheduledOrderProps {
   className?: string
   /** Additional inline styles */
   style?: CSSProperties
+  /** Callback when the order row is clicked */
+  onClick?: () => void
 }
 
 const styles: Record<string, CSSProperties> = {
@@ -176,6 +178,7 @@ export const ScheduledOrder = forwardRef<HTMLDivElement, ScheduledOrderProps>(
       isHighlighted = false,
       className,
       style,
+      onClick,
     },
     ref
   ) => {
@@ -215,10 +218,12 @@ export const ScheduledOrder = forwardRef<HTMLDivElement, ScheduledOrderProps>(
       <div
         ref={ref}
         className={className}
+        onClick={onClick}
         style={{
           ...styles.container,
           ...(showBorder && !isActive ? styles.containerWithBorder : {}),
           ...highlightStyle,
+          ...(onClick ? { cursor: 'pointer' } : {}),
           ...style,
         }}
         data-component="scheduled-order"
