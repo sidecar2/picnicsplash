@@ -1,0 +1,280 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F7F7F2;
+  min-height: 100vh;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 100px;
+  width: 100%;
+}
+
+.filters-section {
+  width: 100%;
+}
+
+.carousel-section {
+  width: 100%;
+}
+
+/* All Restaurants Section */
+.restaurants-section {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.section-title {
+  font-family: 'P22 Mackinac Pro', serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #141414;
+  margin-bottom: 16px;
+}
+
+.restaurants-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.restaurants-grid [data-component="store-card"] {
+  width: 100% !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .content {
+    padding: 24px 60px;
+  }
+  
+  [data-header-row="primary"] {
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+  }
+  
+  [data-header-row="secondary"] {
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  /* Hide center section in primary row */
+  [data-header-center] {
+    display: none !important;
+  }
+  
+  /* Show secondary row */
+  [data-header-row="secondary"] {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 16px 20px;
+    gap: 20px;
+  }
+  
+  [data-header-row="primary"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  
+  [data-header-row="secondary"] {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .restaurants-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .restaurants-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Filtered Section Styles */
+.filtered-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.popular-restaurants-section {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.filtered-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.filtered-title {
+  font-family: 'P22 Mackinac Pro', serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #141414;
+  margin: 0;
+}
+
+.filter-dropdowns {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-dropdown-wrapper {
+  position: relative;
+}
+
+.filter-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #141414;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-dropdown:hover {
+  border-color: #141414;
+}
+
+.filter-dropdown.active {
+  background: #141414;
+  color: white;
+  border-color: #141414;
+}
+
+.filter-dropdown svg {
+  flex-shrink: 0;
+}
+
+.filter-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(20, 20, 20, 0.12);
+  z-index: 20;
+}
+
+.filter-dropdown-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #141414;
+  cursor: pointer;
+}
+
+.filter-dropdown-option:hover {
+  background: #f4f4f4;
+}
+
+.filter-dropdown-option.selected {
+  background: #f4f4f4;
+  color: #141414;
+}
+
+.filter-dropdown-check {
+  flex-shrink: 0;
+  color: #141414;
+}
+
+/* Items Grid */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 16px;
+  row-gap: 16px;
+}
+
+.items-grid [data-component="item-card"] {
+  width: 100% !important;
+}
+
+.no-results {
+  text-align: center;
+  padding: 48px 24px;
+  color: #6c6c6c;
+  font-size: 16px;
+}
+
+/* Responsive for filtered view */
+@media (max-width: 1400px) {
+  .items-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1100px) {
+  .items-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .items-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filtered-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .items-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 12px;
+    row-gap: 12px;
+  }
+}
