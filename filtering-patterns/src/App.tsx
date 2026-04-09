@@ -14,6 +14,7 @@ import './App.css'
 // Extended item type with categories for filtering
 interface FilterableItem extends ItemCarouselItem {
   categories: string[]
+  isPrototypeFiller?: boolean
 }
 
 type SortOption = 'popularity' | 'price'
@@ -588,6 +589,147 @@ function App() {
       dishName: 'Chicken Broccoli Plate',
       price: 14.50,
       categories: ['price', 'bowls', 'top'],
+    },
+    // Additional prototype-only filler items (kept lower priority than real assets)
+    {
+      id: 534,
+      imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Sweetgreen.png',
+      restaurantName: 'Sweetgreen',
+      dishName: 'Citrus Avocado Crunch',
+      price: 15.25,
+      categories: ['salads', 'vegetarian', 'vegan', 'gluten-free'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 535,
+      imageUrl: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Cava.png',
+      restaurantName: 'Cava',
+      dishName: 'Zaatar Falafel Bowl',
+      price: 16.25,
+      categories: ['bowls', 'mediterranean', 'vegetarian', 'vegan'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 536,
+      imageUrl: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Mendocino-Farms.png',
+      restaurantName: 'Mendocino Farms',
+      dishName: 'Green Goddess Chop',
+      price: 17.50,
+      categories: ['salads', 'vegetarian', 'gluten-free', 'top'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 537,
+      imageUrl: 'https://images.unsplash.com/photo-1604909052743-94e838986d24?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Chipotle.png',
+      restaurantName: 'Chipotle',
+      dishName: 'Steak Fajita Bowl',
+      price: 14.95,
+      categories: ['price', 'bowls', 'mexican', 'top'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 538,
+      imageUrl: 'https://images.unsplash.com/photo-1625944230945-1b7dd3b949ab?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Tocaya.png',
+      restaurantName: 'Tocaya',
+      dishName: 'Cali Lime Tacos',
+      price: 13.75,
+      categories: ['price', 'mexican'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 539,
+      imageUrl: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Sugarfish.png',
+      restaurantName: 'Sugarfish',
+      dishName: 'Salmon Set',
+      price: 22.00,
+      categories: ['sushi', 'top'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 540,
+      imageUrl: 'https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Sweetfin.png',
+      restaurantName: 'Sweetfin',
+      dishName: 'Yuzu Poke Bowl',
+      price: 16.75,
+      categories: ['poke', 'bowls', 'sushi'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 541,
+      imageUrl: 'https://images.unsplash.com/photo-1512058564366-c9e3e046f621?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Ggiata.png',
+      restaurantName: 'Ggiata',
+      dishName: 'Turkey Mozz Sando',
+      price: 15.50,
+      categories: ['sandwiches', 'top'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 542,
+      imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Pine-and-Crane.png',
+      restaurantName: 'Pine & Crane',
+      dishName: 'Scallion Beef Noodles',
+      price: 16.25,
+      categories: ['chinese'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 543,
+      imageUrl: 'https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Farm-Stand.png',
+      restaurantName: 'Farm Stand',
+      dishName: 'Ancient Grain Bowl',
+      price: 14.25,
+      categories: ['price', 'bowls', 'vegetarian', 'vegan', 'gluten-free'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 544,
+      imageUrl: 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Levain-Bakery.png',
+      restaurantName: 'Levain Bakery',
+      dishName: 'Cinnamon Morning Bun',
+      price: 6.50,
+      categories: ['price', 'limited'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 545,
+      imageUrl: 'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Starbucks.png',
+      restaurantName: 'Starbucks',
+      dishName: 'Iced Matcha Latte',
+      price: 7.25,
+      categories: ['price', 'limited'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 546,
+      imageUrl: 'https://images.unsplash.com/photo-1467453678174-768ec283a940?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Erewhon-Market.png',
+      restaurantName: 'Erewhon Market',
+      dishName: 'Glow Greens Smoothie',
+      price: 18.00,
+      categories: ['limited', 'vegetarian', 'vegan', 'gluten-free', 'top'],
+      isPrototypeFiller: true,
+    },
+    {
+      id: 547,
+      imageUrl: 'https://images.unsplash.com/photo-1628294895950-9805252327bc?w=900&auto=format&fit=crop',
+      restaurantLogo: '/images/logos/Talo-Organic.png',
+      restaurantName: 'Talo Organic',
+      dishName: 'Lemon Herb Chicken Bowl',
+      price: 17.25,
+      categories: ['bowls', 'mediterranean'],
+      isPrototypeFiller: true,
     },
   ]
 
@@ -1344,7 +1486,11 @@ function App() {
             {/* Items Grid */}
             <div className="items-grid">
               {filteredItems
-                .sort((a, b) => sortBy === 'price' ? a.price - b.price : 0)
+                .sort((a, b) => {
+                  const priorityDelta = Number(!!a.isPrototypeFiller) - Number(!!b.isPrototypeFiller)
+                  if (priorityDelta !== 0) return priorityDelta
+                  return sortBy === 'price' ? a.price - b.price : 0
+                })
                 .map((item) => (
                   <ItemCard
                     key={item.id}
